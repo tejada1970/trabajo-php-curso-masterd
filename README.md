@@ -1,11 +1,11 @@
 # trabajo-php-curso-masterd
 Este proyecto es un trabajo obligatorio que realizé en 'Curso Superior en programación de páginas Web' matriculado en Febrero de 2022 en: Centro MasterD Valencia, perteneciente a (Instituto Tecnológico de MasterD / Zaragoza). Representa una clínica veterinaria ficticia y fue entregado el: 19/02/2023.
 
-##Enunciado del Trabajo
+## Enunciado del Trabajo
 Puedes encontrar el enunciado completo del trabajo [aquí](Enunciado PHP.pdf).
 Es importante tener en cuenta que se trata de un proyecto ficticio utilizado con propósitos educativos y de práctica.
 
-##Características
+## Características
 Utiliza base de datos:
 Es importante destacar que este proyecto cuenta con una base de datos. Para garantizar el correcto funcionamiento del trabajo de PHP, se proporciona dicha base de datos en formato SQL (small_pets.sql) que contiene los datos necesarios para su funcionamiento. Esta base de datos se puede descargar junto al resto de archivos del proyecto desde [haciendo clic aquí](Code/Download ZIP).
 
@@ -14,7 +14,7 @@ Es importante destacar que este proyecto cuenta con una base de datos. Para gara
 Requerimientos del servidor:
 Para su correcto funcionamiento, el proyecto debe ser ejecutado desde un servidor. Por ejemplo, se recomienda utilizar XAMPP u otro servidor local para alojar la aplicación.
 
-##Configuración del Entorno Local
+## Configuración del Entorno Local
 Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu servidor web y la base de datos. Sigue los pasos a continuación:
 
 1. Asegúrate de tener XAMPP o un servidor web similar instalado en tu computadora.
