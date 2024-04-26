@@ -23,12 +23,10 @@ Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu se
 
 3. Completa las siguientes variables con la información de tu entorno local en el archivo .env.php del proyecto:
 
-<?php
    const SERVIDOR = "localhost"; #// Manten 'localhost' si es local o cambialo por la dirección del servidor de tu base de datos.
    const BD = "small_pets"; #// Manten este 'nombre_base_de_datos' proporcionado en el repositorio para su correcta importación y funcionamiento.
    const USUARIO = "nombre_usuario"; #// Cambia 'nombre_usuario' por el nombre de usuario de tu base de datos.
    const PASSWORD = "contraseña"; #// Cambia 'contraseña' por la contraseña de tu base de datos.
-?>
 
 IMPORTANTE:
 "La seguridad de las credenciales en un proyecto en producción es de suma importancia para proteger la integridad de los datos y la privacidad de los usuarios. Las credenciales, como nombres de usuario y contraseñas, proporcionan acceso privilegiado a sistemas y bases de datos críticas. La exposición inadvertida de estas credenciales puede resultar en brechas de seguridad devastadoras, comprometiendo la confidencialidad y la disponibilidad de la información. Por lo tanto, es fundamental implementar prácticas de seguridad robustas, como el almacenamiento seguro de credenciales, el uso de políticas de acceso adecuadas y la gestión cuidadosa de permisos. Además, es importante educar a todo el equipo sobre la importancia de mantener las credenciales confidenciales y evitar compartir información sensible en entornos no seguros. Proteger las credenciales es un componente esencial de cualquier estrategia de seguridad en el desarrollo y despliegue de aplicaciones en producción."
