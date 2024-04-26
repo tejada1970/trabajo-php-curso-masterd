@@ -3,6 +3,7 @@ Este proyecto es un trabajo obligatorio que realizé en 'Curso Superior en progr
 
 ## Enunciado del Trabajo
 Puedes encontrar el enunciado completo del trabajo [aquí](Enunciado PHP.pdf).
+
 Es importante tener en cuenta que se trata de un proyecto ficticio utilizado con propósitos educativos y de práctica.
 
 ## Características
