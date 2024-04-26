@@ -1,0 +1,25 @@
+
+/***** STYLES MSG DIALOG BIENVENIDA *****/
+@media only screen and (min-width: 320px) {
+    body {position: relative;}
+    #modalBienvenida {
+        position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; background: rgb(0, 0, 0, 0.6); 
+        display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5000;
+    }
+
+    .divBienvenida {
+        display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 3.125rem;
+        padding: 1.25rem; color: var(--GreenLight); border-radius: 1.25rem; font-size: 20px; text-align: center;
+    }
+    .divBienvenida p {text-shadow: none; background: transparent; font-size: 22px; width: 100%;}
+    .spanBienvenida {color: var(--Aqua); font-size: 25px;}
+    .spanBienvenida2 {font-size: 22px; color: var(--Orange);}
+
+    #btnAceptBienvenida {
+        background: var(--bgLinear); color: var(--col111); font-size: 17px;
+        width: 8.125rem; font-weight: bold; margin: 1.25rem 0; padding: 0.625rem 1.25rem; border: none;
+        border-radius: 0.625rem; cursor: pointer; letter-spacing: 0.0625rem; outline: 0.125rem solid var(--OrangeDark);
+    }
+    #btnAceptBienvenida:hover {color: var(--OrangeDark);}
+    #btnAceptBienvenida:active {transform: scale(0.9);}
+}

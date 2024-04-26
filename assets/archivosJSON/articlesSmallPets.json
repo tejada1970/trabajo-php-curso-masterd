@@ -1,0 +1,62 @@
+[
+    {
+        "urlImg":"./assets/images/images_articlesPets/01_camaGatito.jpg",
+        "titulo":"Cama Gatito",
+        "precio":"$14.95"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/02_bowls.jpg",
+        "titulo":"Bolws",
+        "precio":"$24.00"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/03_casetaHamster.jpg",
+        "titulo":"Caseta Hámster",
+        "precio":"$25.95"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/04_acuario.jpg",
+        "titulo":"Acuario",
+        "precio":"$55.00"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/05_jerseyChihuahua.jpg",
+        "titulo":"Jersey Chihuahua",
+        "precio":"$13.99"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/06_terrarioIguana.jpg",
+        "titulo":"Terrario Iguana",
+        "precio":"$138.34"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/07_pelotita.jpg",
+        "titulo":"Pelota",
+        "precio":"$2.00"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/08_posaAves.jpg",
+        "titulo":"Reposa Aves",
+        "precio":"$1.40"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/09_terrarioTurtles.jpg",
+        "titulo":"Terrario Tortugas",
+        "precio":"$59.00"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/10_correaPerrito.jpg",
+        "titulo":"Correa Paseo",
+        "precio":"$3.00"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/11_pajarita.jpg",
+        "titulo":"Pajarita",
+        "precio":"$7.00"
+    },
+    {
+        "urlImg":"./assets/images/images_articlesPets/12_camaPerrito.jpg",
+        "titulo":"Cama Perrito",
+        "precio":"$15.00"
+    }
+]

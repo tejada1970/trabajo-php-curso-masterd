@@ -1,0 +1,46 @@
+
+/***** STYLES REGISTRO *****/
+@media only screen and (min-width: 320px) {
+    .containerFraseH2 {
+        margin-bottom: 0.9375rem; padding: 0.625rem 0 0.9375rem 0; font-size: 16px; width: 100%;
+        background: var(--bgLinear); flex-direction: column;
+    }
+    .containerFraseH2 h2 {text-align: center; color: var(--OrangeDark); text-shadow: var(--shadowSmoke); width: 50%;}
+
+    .container {
+        position: relative; border-radius: 1.25rem; background: var(--col222);
+        border: 0.125rem solid var(--OrangeDark); max-width: 21.875rem; min-width: 21.875rem;
+    }
+    
+    .validarDatos {
+        text-align: center; color: var(--Smoke); padding: 0.625rem 0;
+        font-size: 17px; text-shadow: var(--shadowRed); z-index: 700;
+    }
+    
+    form {
+        background: linear-gradient(to top,#111, #555, #111); font-size: 16px; height: 100%;
+        padding: 0.9375rem; width: 90%; margin: 0 auto; margin-bottom: 0.9375rem; font-weight: bold;
+    }
+    form a {color: var(--Smoke); padding-left: 0.625rem;}
+    form input {outline: none; color: var(--col222); width: 100%; margin-bottom: 0.625rem; padding: 0.3125rem;}
+    input[type="submit"] {
+        background: var(--bgLinear); color: var(--col111); font-weight: bold;
+        width: 100%; margin-top: 0.625rem; padding: 0.625rem; border: none; font-size: 17px;
+        border-radius: 0.625rem; cursor: pointer; letter-spacing: 0.0625rem; outline: 0.125rem solid var(--OrangeDark);
+    }
+    input[type="submit"]:hover {
+        color: var(--OrangeDark); outline: 0.125rem solid var(--GreenLight); text-shadow: var(--shadowSmoke);
+    }
+    input[type="submit"]:active {transform: scale(0.9);}
+    .containerInputs input::placeholder {color: var(--col222); font-weight: bold;}
+    .containerInputs .container_submit {text-align: center; width: 100%; padding: 0;}
+    .containerInputs h3 {font-size: 20px; color: var(--Orange); font-weight: bold; text-shadow: var(--shadowBlack);}
+    .containerInputs h3 a {margin-right: 0.625rem; line-height: 2.5rem;}
+    .containerInputs h3 a:hover {color: var(--Orange);}
+    .colorLabel {color:var(--Orange); font-size: 14px; font-weight: bold;}
+}
+
+/* forms: registro(visit), perfil(user y admin), insertarUserAdmin, modificarUserAdmin */
+@media only screen and (min-width: 768px) {
+    .formWidth {max-width: 31.25rem; min-width: 31.25rem;}
+}

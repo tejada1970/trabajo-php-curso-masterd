@@ -1,0 +1,25 @@
+
+/***** STYLES FOOTER *****/
+@media only screen and (min-width: 320px) {
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {font-size: 16px;}
+    .color_span {color: #00ffff;}
+    .llamanos {font-size: 21px;}
+    .footer {background: #222; height: 100%; color: #f5f5f5; display: flex; justify-content: center; align-items: center; text-align: center;}
+
+    /**** TEXT-ANIMATE ****/
+    .footer .contenedor_img a{cursor: default;}
+    .footer .contenedor_img img{ width: 31.25rem; height: 25rem; object-fit: cover; object-position: center; padding: 1.25rem;}
+    .footer .contenedor_texto .titulo {font-size: 30px; font-weight: normal;}
+    .footer .contenedor_texto .mascota {font-weight: bold; color: #ffa500; font-style: normal;}
+    .footer .contenedor_texto p {font-size: 21px; padding: 1.25rem; color: #999;}
+    .footer .socials div p {font-weight: bold; color: #ffa500;}
+    .footer .socials div p::first-letter {color: #f5f5f5; text-shadow: 0.0625rem 0.0625em 0.0625rem #ffa500; font-size: 30px;}
+    .footer .socials div a img {width: 3rem; height: 3rem; border-radius: 50%; margin-right: 1.25rem;}
+
+    .flex {flex-wrap: wrap;}
+
+    .btnAvisoLegal a {color: #f5f5f5; font-weight: bold; font-size: 20px; text-decoration: none;}
+    .btnAvisoLegal::first-letter {color: #ffa500; text-shadow: 0.0625rem 0.0625em 0.0625rem #f5f5f5; font-size: 30px;}
+    .btnAvisoLegal::after {content: ""; display: block; max-width: 8.125rem; margin-left: 6.25rem; margin-top: 0.3125rem; height: 0.25rem; background: #999;}
+}
