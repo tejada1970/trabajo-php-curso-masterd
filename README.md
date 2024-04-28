@@ -7,15 +7,30 @@ Puedes encontrar el enunciado completo del trabajo [aquí](Enunciado PHP.pdf).
 Es importante tener en cuenta que se trata de un proyecto ficticio utilizado con propósitos educativos y de práctica.
 
 ## Características
-Utiliza base de datos:
-Es importante destacar que este proyecto cuenta con una base de datos. Para garantizar el correcto funcionamiento del trabajo de PHP, se proporciona dicha base de datos en formato SQL (small_pets.sql) que contiene los datos necesarios para su funcionamiento. Esta base de datos se puede descargar junto al resto de archivos del proyecto desde [haciendo clic aquí](Code/Download ZIP).
+**Utiliza base de datos:**
+Para garantizar el correcto funcionamiento del trabajo de PHP, se proporciona dicha base de datos en formato SQL (small_pets.sql) que contiene los datos necesarios para su funcionamiento.
 
-'Es importante destacar que esta base de datos está diseñada exclusivamente para respaldar el funcionamiento del trabajo de PHP y no debe ser utilizada para ningún otro fin'
+**'Es importante destacar que esta base de datos está diseñada exclusivamente para respaldar el funcionamiento del trabajo de PHP y no debe ser utilizada para ningún otro fin'**
 
-Requerimientos del servidor:
+**Requerimientos del servidor:**
 Para su correcto funcionamiento, el proyecto debe ser ejecutado desde un servidor. Por ejemplo, se recomienda utilizar XAMPP u otro servidor local para alojar la aplicación.
 
-## Configuración del Entorno Local
+## Credenciales de acesso
+- Para acceder como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Login" del proyecto.
+
+- Para acceder con tus propias credenciales reales o ficticias, puedes hacerlo registrandote desde la página "Registro" de la aplicación. (En este caso, solo te podrás registrar como "user").
+
+## Descarga y Configuración en Entorno Local
+**Descarga el Proyecto:** 
+Haz clic en el botón "Code" en este repositorio y selecciona "Download ZIP".
+
+**Extracción del Proyecto:**
+Crea una nueva carpeta en tu escritorio. Ve a la carpeta de descargas y arrastra el archivo ZIP descargado a la nueva carpeta para extraerlo.
+
+**Ubicación del Proyecto en el Servidor Local:**
+Copia la carpeta del proyecto que has extraido y pégala en la carpeta de tu servidor local. Por ejemplo, en XAMPP, la carpeta usualmente es xampp/htdocs.
+
+**Configuración en Entorno Local:**
 Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu servidor local y la base de datos. Sigue los pasos a continuación:
 
 1. **Asegúrate de tener XAMPP o un servidor web similar instalado en tu computadora**.
