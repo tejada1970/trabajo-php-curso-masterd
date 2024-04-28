@@ -47,5 +47,7 @@ Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu se
 
 **Siguiendo estos pasos, habrás configurado correctamente tu entorno local y habrás importado la base de datos necesaria para el funcionamiento de la aplicación.**
 
+4. **Visualización del Proyecto:** Abre tu navegador web y navega a (localhost/pon aquí el nombre de la carpeta del proyecto extraido), esto cargará el proyecto en tu navegador y podrás interactuar con él localmente. 
+
 **IMPORTANTE:**
 "La seguridad de las credenciales en un proyecto en producción es de suma importancia para proteger la integridad de los datos y la privacidad de los usuarios. Las credenciales, como nombres de usuario y contraseñas, proporcionan acceso privilegiado a sistemas y bases de datos críticas. La exposición inadvertida de estas credenciales puede resultar en brechas de seguridad devastadoras, comprometiendo la confidencialidad y la disponibilidad de la información. Por lo tanto, es fundamental implementar prácticas de seguridad robustas, como el almacenamiento seguro de credenciales, el uso de políticas de acceso adecuadas y la gestión cuidadosa de permisos. Además, es importante educar a todo el equipo sobre la importancia de mantener las credenciales confidenciales y evitar compartir información sensible en entornos no seguros. Proteger las credenciales es un componente esencial de cualquier estrategia de seguridad en el desarrollo y despliegue de aplicaciones en producción."
