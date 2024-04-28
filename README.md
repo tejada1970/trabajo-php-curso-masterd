@@ -16,9 +16,9 @@ Requerimientos del servidor:
 Para su correcto funcionamiento, el proyecto debe ser ejecutado desde un servidor. Por ejemplo, se recomienda utilizar XAMPP u otro servidor local para alojar la aplicación.
 
 ## Configuración del Entorno Local
-Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu servidor web y la base de datos. Sigue los pasos a continuación:
+Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu servidor local y la base de datos. Sigue los pasos a continuación:
 
-1. Asegúrate de tener XAMPP o un servidor web similar instalado en tu computadora.
+1. **Asegúrate de tener XAMPP o un servidor web similar instalado en tu computadora**.
 
 2. **Proceso de Importación de la Base de Datos:**
 
@@ -38,14 +38,14 @@ Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu se
 
     7. Después de que la importación se complete con éxito, recibirás una confirmación en pantalla. Ahora la base de datos está lista para ser utilizada por la aplicación.
 
-3. Completa las siguientes variables con la información de tu entorno local en el archivo .env.php del proyecto:
+3. **Completa las siguientes variables con la información de tu entorno local en el archivo .env.php del proyecto:**
    
 - `SERVIDOR`: Mantén 'localhost' si es local o cámbialo por la dirección del servidor de tu base de datos.
 - `BD`: Mantén el nombre 'small_pets' proporcionado en el repositorio para su correcta importación y funcionamiento.
 - `USUARIO`: Cambia 'nombre_usuario' por el nombre de usuario de tu base de datos.
 - `PASSWORD`: Cambia 'contraseña' por la contraseña de tu base de datos.
 
-Siguiendo estos pasos, habrás configurado correctamente tu entorno local y habrás importado la base de datos necesaria para el funcionamiento de la aplicación.
+**Siguiendo estos pasos, habrás configurado correctamente tu entorno local y habrás importado la base de datos necesaria para el funcionamiento de la aplicación.**
 
-IMPORTANTE:
+**IMPORTANTE:**
 "La seguridad de las credenciales en un proyecto en producción es de suma importancia para proteger la integridad de los datos y la privacidad de los usuarios. Las credenciales, como nombres de usuario y contraseñas, proporcionan acceso privilegiado a sistemas y bases de datos críticas. La exposición inadvertida de estas credenciales puede resultar en brechas de seguridad devastadoras, comprometiendo la confidencialidad y la disponibilidad de la información. Por lo tanto, es fundamental implementar prácticas de seguridad robustas, como el almacenamiento seguro de credenciales, el uso de políticas de acceso adecuadas y la gestión cuidadosa de permisos. Además, es importante educar a todo el equipo sobre la importancia de mantener las credenciales confidenciales y evitar compartir información sensible en entornos no seguros. Proteger las credenciales es un componente esencial de cualquier estrategia de seguridad en el desarrollo y despliegue de aplicaciones en producción."
