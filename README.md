@@ -1,68 +1,255 @@
-# trabajo-php-curso-masterd
-Este proyecto es un trabajo obligatorio que realizé en 'Curso Superior en programación de páginas Web' matriculado en Febrero de 2022 en: Centro MasterD Valencia, perteneciente a (Instituto Tecnológico de MasterD / Zaragoza). Representa una clínica veterinaria ficticia y fue entregado el: 19/02/2023.
+## Statement of work
 
-## Enunciado del Trabajo
-Puedes encontrar el enunciado completo del trabajo [aquí](Enunciado PHP.pdf).
+You can find the complete statement of this work, in the last point of this document with the title (FINAL WORK: PHP).
 
-Es importante tener en cuenta que se trata de un proyecto ficticio utilizado con propósitos educativos y de práctica.
+**It is important to note that this is a fictional project used for educational and practice purposes.**
 
-## Características
-**Utiliza base de datos:**
-Para garantizar el correcto funcionamiento del trabajo de PHP, se proporciona dicha base de datos en formato SQL (small_pets.sql) que contiene los datos necesarios para su funcionamiento.
+## Characteristics
 
-**'Es importante destacar que esta base de datos está diseñada exclusivamente para respaldar el funcionamiento del trabajo de PHP y no debe ser utilizada para ningún otro fin'**
+**Use database:**
 
-**Requerimientos del servidor:**
-Para su correcto funcionamiento, el proyecto debe ser ejecutado desde un servidor. Por ejemplo, se recomienda utilizar XAMPP u otro servidor local para alojar la aplicación.
+To ensure the correct functioning of PHP work, this database is provided in SQL format (small_pets.sql) that contains the data necessary for its operation.
 
-## Credenciales de acesso
-- Para acceder como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Login" del proyecto.
+**'It is important to note that this database is designed exclusively to support the operation of PHP work and should not be used for any other purpose'**
 
-- Para acceder con tus propias credenciales reales o ficticias, puedes hacerlo registrandote desde la página "Registro" de la aplicación. (En este caso, solo te podrás registrar como "user").
+**Server requirements:**
 
-## Descarga y Configuración en Entorno Local
-**Descarga el Proyecto:** 
-Haz clic en el botón "Code" en este repositorio y selecciona "Download ZIP".
+For its correct functioning, the project must be executed from a server. For example, it is recommended to use XAMPP or another local server to host the application.
 
-**Extracción del Proyecto:**
-Crea una nueva carpeta en tu escritorio. Ve a la carpeta de descargas y arrastra el archivo ZIP descargado a la nueva carpeta para extraerlo.
+## Access credentials
 
-**Ubicación del Proyecto en el Servidor Local:**
-Copia la carpeta del proyecto que has extraido y pégala en la carpeta de tu servidor local. Por ejemplo, en XAMPP, la carpeta usualmente es xampp/htdocs.
+To log in as an administrator or user and check the operation of the application, I have established two default credentials that are displayed on the "Login" page of the project.
 
-**Configuración en Entorno Local:**
-Antes de ejecutar el proyecto en tu entorno local, necesitarás configurar tu servidor local y la base de datos. Sigue los pasos a continuación:
+To log in with your own real or fictitious credentials, you can do so by registering from the "Registration" page of the application. (In this case, you can only register as "user").
 
-1. **Asegúrate de tener XAMPP o un servidor web similar instalado en tu computadora**.
+## Download and Configuration in Local Environment
 
-2. **Proceso de Importación de la Base de Datos:**
+**Download the Project:** 
+Click the "Code" button in this repository and select "Download ZIP".
 
-    Para garantizar el funcionamiento correcto de la aplicación, es necesario importar la base de datos proporcionada. Sigue estos pasos detallados para realizar la importación correctamente:
+**Project Extraction:**
+Create a new folder on your desktop. Go to the downloads folder and drag the downloaded ZIP file to the new folder to extract it.
 
-    1. En Windows, accede al Panel de Control de XAMPP desde el menú de inicio (Inicio > XAMPP > XAMPP Control Panel) y ejecútalo como administrador para asegurarte de tener los permisos necesarios.
+**Location of the Project on the Local Server:**
+Copy the extracted project folder and paste it into the folder on your local server. For example, in XAMPP, the folder is usually xampp/htdocs.
 
-    2. Inicia tanto Apache como MySQL desde el panel de control. Estos son servicios esenciales para el servidor web y la base de datos, respectivamente.
+**Local Environment Configuration:**
+Before running the project in your local environment, you will need to configure your local server and database. Follow the steps below:
 
-    3. Después de iniciar MySQL, haz clic en el botón "Admin" junto a él para abrir la interfaz de phpMyAdmin en tu navegador web predeterminado.
+1. **Make sure you have XAMPP or a similar web server installed on your computer**.
 
-    4. Dentro de phpMyAdmin, selecciona la opción "Base de datos" en la parte superior y crea una nueva base de datos con el nombre 'small_pets'.
+2. **Database Import Process:**
 
-    5. Regresa a la página principal de phpMyAdmin y selecciona la pestaña 'Importar'. Aquí, carga el archivo SQL proporcionado junto con los archivos del proyecto.
+    To ensure the correct functioning of the application, it is necessary to import the provided database. Follow these detailed steps to import successfully:
 
-    6. Una vez cargado el archivo, haz clic en el botón 'Importar' para iniciar el proceso de importación. Este paso puede tomar un tiempo dependiendo del tamaño de la base de datos.
+    1. On Windows, access the XAMPP Control Panel from the start menu (Start > XAMPP > XAMPP Control Panel) and run it as administrator to ensure you have the necessary permissions.
 
-    7. Después de que la importación se complete con éxito, recibirás una confirmación en pantalla. Ahora la base de datos está lista para ser utilizada por la aplicación.
+    2. Start both Apache and MySQL from the control panel. These are essential services for the web server and the database, respectively.
 
-3. **Completa las siguientes variables con la información de tu entorno local en el archivo .env.php del proyecto:**
+    3. After starting MySQL, click the “Admin” button next to it to open the phpMyAdmin interface in your default web browser.
+
+    4. Within phpMyAdmin, select the "Database" option at the top and create a new database with the name 'small_pets'.
+
+    5. Return to the main phpMyAdmin page and select the 'Import' tab. Here, upload the provided SQL file along with the project files.
+
+    6. Once the file is uploaded, click on the 'Import' button to start the import process. This step may take a while depending on the size of the database.
+
+    7. After the import completes successfully, you will receive an on-screen confirmation. Now the database is ready to be used by the application.
+
+3. **Fill in the following variables with your local environment information in the project's .env.php file:**
    
-    - `SERVIDOR`: Mantén 'localhost' si es local o cámbialo por la dirección del servidor de tu base de datos.
-    - `BD`: Mantén el nombre 'small_pets' proporcionado en el repositorio para su correcta importación y funcionamiento.
-    - `USUARIO`: Cambia 'nombre_usuario' por el nombre de usuario de tu base de datos.
-    - `PASSWORD`: Cambia 'contraseña' por la contraseña de tu base de datos.
+    - `SERVER`: Keep 'localhost' if local or change it to the address of your database server.
+    - `BD`: Keep the name 'small_pets' provided in the repository for correct import and operation.
+    - `USER`: Change 'username' to the username of your database.
+    - `PASSWORD`: Change 'password' to your database password.
 
-    **Siguiendo estos pasos, habrás configurado correctamente tu entorno local y habrás importado la base de datos necesaria para el funcionamiento de la aplicación.**
+    **By following these steps, you will have correctly configured your local environment and you will have imported the database necessary for the application to function.**
 
-4. **Visualización del Proyecto:** Abre tu navegador web y navega a (localhost/pon aquí el nombre de la carpeta del proyecto extraido), esto cargará el proyecto en tu navegador y podrás interactuar con él localmente. 
+4. **Project View:** Open your web browser and navigate to (localhost/put here the folder name of the extracted project), this will load the project in your browser and you can interact with it locally. 
 
-5. **IMPORTANTE:**
-"La seguridad de las credenciales en un proyecto en producción es de suma importancia para proteger la integridad de los datos y la privacidad de los usuarios. Las credenciales, como nombres de usuario y contraseñas, proporcionan acceso privilegiado a sistemas y bases de datos críticas. La exposición inadvertida de estas credenciales puede resultar en brechas de seguridad devastadoras, comprometiendo la confidencialidad y la disponibilidad de la información. Por lo tanto, es fundamental implementar prácticas de seguridad robustas, como el almacenamiento seguro de credenciales, el uso de políticas de acceso adecuadas y la gestión cuidadosa de permisos. Además, es importante educar a todo el equipo sobre la importancia de mantener las credenciales confidenciales y evitar compartir información sensible en entornos no seguros. Proteger las credenciales es un componente esencial de cualquier estrategia de seguridad en el desarrollo y despliegue de aplicaciones en producción."
+5. **IMPORTANT:**
+"Credential security in a production project is of utmost importance to protect data integrity and user privacy. Credentials, such as usernames and passwords, provide privileged access to critical systems and databases. Inadvertent exposure of these credentials can result in devastating security breaches, compromising the confidentiality and availability of information. Therefore, it is essential to implement robust security practices, such as secure storage of credentials, use of appropriate access policies, and careful management of permissions. Additionally, it is important to educate the entire team on the importance of keeping credentials confidential and avoiding sharing sensitive information in unsecured environments. Protecting credentials is an essential component of any security strategy when developing and deploying applications in production."
+
+# FINAL WORK: PHP
+
+## Instructions:
+
+As the final exercise of the module, you must create a website.
+
+It could be from a fictitious company. The information does not have to be real.
+
+To carry out this project you must use: HTML5, CSS3, JavaScript,
+SQL and PHP.
+
+## Realization of the website:
+
+The first part of the exercise will consist of two sections:
+
+### 1. Website database that will contain the following tables:
+
+**users_data**, which will contain the personal information of the users, with the fields:
+
+idUser: Primary key of type INT, self-incrementing, not null
+name: this field cannot be null
+surnames: this field cannot be null
+email: this field must be unique and cannot be null
+phone: this field must be text type and not null
+date_of birth: field of type date, not null
+address: text type field
+sex: text or enum type field
+
+**users_login**, which will contain the login information of the registered users, with the fields:
+
+idLogin: Primary key of type INT, self-incrementing, not null
+idUser: FK that relates this table to users_data, it must be of type INT, not null and unique
+user: text type field, not null and unique
+password: text type field, not null
+role: not null. The values ​​of this field will be: admin or user
+
+**appointments**, which will contain the information about the appointments requested by users, with the fields:
+
+Appointmentid: Primary key of type INT, self-incrementing, not null
+idUser: FK that relates this table to users_data, INT, not null
+appointment_date: date type field, not null
+appointment_reason: text type field
+
+**news**, which will contain the different news items written by the website administrators, with the fields:
+
+idNews: PK of type INT, self-incrementing, not null
+title: text type field, not null, unique
+image: this field cannot be null
+text: long text type field, not null
+date: date type field, not null
+idUser: FK that relates this table to users_data, INT, not null
+
+### 2. Website composed of:
+
+**o A home page, which will be called index:**
+
+This page will be the front page of the website and must contain several sections that include different HTML elements such as: texts, images, hyperlinks,...
+
+**o A news page, which will be called news:**
+
+It should show all the news in the database. For each news item you must see the title, date of publication, text of the news, photo of the news and the name of the user who created it.
+
+**o A page that allows visitors to register on the website, called registration:**
+
+This page should include:
+
+A link to the login page in case the visitor is already registered on the website.
+
+A complete form that obtains all the necessary personal data of the visitors to insert into the users_data table and the necessary login data to insert into the users_login table.
+
+**NOTE:**
+
+Whenever a visitor registers through this form, they will do so with the role: user.
+
+If the visitor submits the form and for some reason cannot register (they have already registered before) they should receive an error message.
+
+If the visitor registers correctly, a confirmation message must be sent and redirected to the login.
+
+**o A page that allows visitors to log in to the website, called login:**
+
+This page should include:
+ 
+A hyperlink that allows the visitor to be redirected to the registration page if they do not have an account.
+
+A login form that asks the user for the necessary data to log into the website.
+
+**NOTE:**
+
+If the visitor enters incorrect data in the login form, they should receive an error message.
+
+If the data entered is correct, a confirmation message must be sent to you and you will be redirected to the index.
+
+The visitor should see on all pages of the website (index, news, registration and login) a navigation bar that will allow them to navigate between said pages and highlight which page they are on at that moment within the website.
+
+### Important details to keep in mind while performing the exercise:
+
+Forms must be validated with PHP (at least required fields).
+
+The password must be encrypted during user registration.
+
+The navigation bar will be the same for visitors, users and administrators, but the sections it will display will vary depending on whether you are a visitor, user or administrator.
+
+## Specifications for users:
+
+**When a visitor logs in through the login page and has the role: user in their credentials, they become a user.**
+
+### 1. A user will have access to new pages, in addition to the index and news, which will be:
+
+**o A page called profile:**
+
+Where the user's personal data will be displayed (name, surname,...) and can also be modified.
+
+The username you log in with cannot be changed.
+
+The password you log in with can be changed but cannot be viewed.
+
+**o A page called citations:**
+
+Where the user can:
+
+Request appointments on the website through a form, which allows data to be inserted into the appointment table.
+
+Modify the appointments that you already have planned, as long as they have not been made, that is, as long as the date of the appointment is not earlier than today.
+
+Delete planned appointments that have not yet taken place.
+
+### 2. A user's navigation bar should display the following sections:
+
+**or index**
+**or news**
+**or subpoenas**
+**or profile**
+**or log out** (If the user clicks on this option, they will be allowed to log out of the account and will become a visitor, so the profile and citation pages will no longer be seen in the navigation bar, exclusive of the users).
+
+## Specifications for administrators:
+
+**When a visitor logs in through the login page and has the role: admin in their credentials, they become an administrator.**
+
+### 1. An administrator will have access to new pages, in addition to the index, news and profile, which will be:
+
+**o A page called users-administration:**
+
+Where the administrator can:
+
+Create new users and assign them the user or admin role.
+
+Modify existing users.
+
+Delete existing users.
+
+**o A page called appointments-administration:**
+
+Where the administrator can select a user and:
+
+Create appointments for the user.
+
+View the appointments that the user has assigned.
+
+Modify the appointments assigned to the user.
+
+Delete appointments assigned to the user.
+
+**o A page called news-administration:**
+
+Where the administrator can:
+ 
+Create news.
+
+See all news already created.
+
+Modify any of the existing news.
+ 
+Delete any of the existing news.
+
+### 2. An administrator's navigation bar should display the following sections:
+
+**or index**
+**or news**
+**or administration-users**
+**or subpoenas-administration**
+**or news-administration**
+**or profile**
+**or log out** (If the administrator clicks on this option, they will be allowed to log out of the account and will become a visitor, so they should no longer be visible (or accessible) in the navigation bar. administrators-only sections).
