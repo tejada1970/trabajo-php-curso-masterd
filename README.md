@@ -85,7 +85,6 @@ SQL and PHP.
 
 ### The first part of the exercise will consist of two sections:
 
-
 ### 1. Website database that will contain the following tables:
 
 **users_data**, which will contain the personal information of the users, with the fields:
@@ -123,18 +122,15 @@ SQL and PHP.
 - date: date type field, not null
 - idUser: FK that relates this table to users_data, INT, not null
 
-
 ### 2. Website composed of:
 
 **o A home page, which will be called index:**
 
 This page will be the front page of the website and must contain several sections that include different HTML elements such as: texts, images, hyperlinks,...
 
-
 **o A news page, which will be called news:**
 
 It should show all the news in the database. For each news item you must see the title, date of publication, text of the news, photo of the news and the name of the user who created it.
-
 
 **o A page that allows visitors to register on the website, called registration:**
 
@@ -144,7 +140,6 @@ A link to the login page in case the visitor is already registered on the websit
 
 A complete form that obtains all the necessary personal data of the visitors to insert into the users_data table and the necessary login data to insert into the users_login table.
 
-
 **NOTE:**
 
 Whenever a visitor registers through this form, they will do so with the role: user.
@@ -152,7 +147,6 @@ Whenever a visitor registers through this form, they will do so with the role: u
 If the visitor submits the form and for some reason cannot register (they have already registered before) they should receive an error message.
 
 If the visitor registers correctly, a confirmation message must be sent and redirected to the login.
-
 
 **o A page that allows visitors to log in to the website, called login:**
 
@@ -162,7 +156,6 @@ A hyperlink that allows the visitor to be redirected to the registration page if
 
 A login form that asks the user for the necessary data to log into the website.
 
-
 **NOTE:**
 
 If the visitor enters incorrect data in the login form, they should receive an error message.
@@ -170,7 +163,6 @@ If the visitor enters incorrect data in the login form, they should receive an e
 If the data entered is correct, a confirmation message must be sent to you and you will be redirected to the index.
 
 The visitor should see on all pages of the website (index, news, registration and login) a navigation bar that will allow them to navigate between said pages and highlight which page they are on at that moment within the website.
-
 
 ### Important details to keep in mind while performing the exercise:
 
@@ -180,11 +172,9 @@ The password must be encrypted during user registration.
 
 The navigation bar will be the same for visitors, users and administrators, but the sections it will display will vary depending on whether you are a visitor, user or administrator.
 
-
 ## Specifications for users:
 
 ### When a visitor logs in through the login page and has the role: user in their credentials, they become a user.
-
 
 ### 1. A user will have access to new pages, in addition to the index and news, which will be:
 
@@ -210,17 +200,16 @@ Delete planned appointments that have not yet taken place.
 
 ### 2. A user's navigation bar should display the following sections:
 
-- **o index**
-- **o news**
-- **o subpoenas**
-- **o profile**
-- **o log out** (If the user clicks on this option, they will be allowed to log out of the account and will become a visitor, so the profile and citation pages will no longer be seen in the navigation bar, exclusive of the users).
+- **index**
+- **news**
+- **appointments**
+- **profile**
+- **log out** (If the user clicks on this option, they will be allowed to log out of the account and will become a visitor, so the profile and citation pages will no longer be seen in the navigation bar, exclusive of the users).
 
 
 ## Specifications for administrators:
 
 ### When a visitor logs in through the login page and has the role: admin in their credentials, they become an administrator.
-
 
 ### 1. An administrator will have access to new pages, in addition to the index, news and profile, which will be:
 
@@ -234,7 +223,6 @@ Modify existing users.
 
 Delete existing users.
 
-
 **o A page called appointments-administration:**
 
 Where the administrator can select a user and:
@@ -246,7 +234,6 @@ View the appointments that the user has assigned.
 Modify the appointments assigned to the user.
 
 Delete appointments assigned to the user.
-
 
 **o A page called news-administration:**
 
@@ -263,10 +250,10 @@ Delete any of the existing news.
 
 ### 2. An administrator's navigation bar should display the following sections:
 
-- **o index**
-- **o news**
-- **o administration-users**
-- **o subpoenas-administration**
-- **o news-administration**
-- **o profile**
-- **o log out** (If the administrator clicks on this option, they will be allowed to log out of the account and will become a visitor, so they should no longer be visible (or accessible) in the navigation bar. administrators-only sections).
+- **index**
+- **news**
+- **administration-users**
+- **subpoenas-administration**
+- **news-administration**
+- **profile**
+- **log out** (If the administrator clicks on this option, they will be allowed to log out of the account and will become a visitor, so they should no longer be visible (or accessible) in the navigation bar. administrators-only sections).
