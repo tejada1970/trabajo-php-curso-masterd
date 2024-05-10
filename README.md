@@ -87,7 +87,7 @@ SQL and PHP.
 
 ### 1. Website database that will contain the following tables:
 
-**users_data**, which will contain the personal information of the users, with the fields:
+**`users_data`**, which will contain the personal information of the users, with the fields:
 
 - idUser: Primary key of type INT, self-incrementing, not null
 - name: this field cannot be null
@@ -98,7 +98,7 @@ SQL and PHP.
 - address: text type field
 - sex: text or enum type field
 
-**users_login**, which will contain the login information of the registered users, with the fields:
+**`users_login`**, which will contain the login information of the registered users, with the fields:
 
 - idLogin: Primary key of type INT, self-incrementing, not null
 - idUser: FK that relates this table to users_data, it must be of type INT, not null and unique
@@ -124,7 +124,7 @@ SQL and PHP.
 
 ### 2. Website composed of:
 
-**o A home page, which will be called index:**
+**o A home page, which will be called `index`:**
 
 This page will be the front page of the website and must contain several sections that include different HTML elements such as: texts, images, hyperlinks,...
 
@@ -200,9 +200,9 @@ Delete planned appointments that have not yet taken place.
 
 ### 2. A user's navigation bar should display the following sections:
 
-- **index**
+- **`index`**
 - **news**
-- **appointments**
+- **subpoenas**
 - **profile**
 - **log out** (If the user clicks on this option, they will be allowed to log out of the account and will become a visitor, so the profile and citation pages will no longer be seen in the navigation bar, exclusive of the users).
 
@@ -250,9 +250,9 @@ Delete any of the existing news.
 
 ### 2. An administrator's navigation bar should display the following sections:
 
-- **index**
+- **`index`**
 - **news**
-- **administration-users**
+- **users-administration**
 - **subpoenas-administration**
 - **news-administration**
 - **profile**
