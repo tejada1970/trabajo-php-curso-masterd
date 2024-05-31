@@ -78,13 +78,13 @@ Create a complete website for a fictitious company using the technologies and to
 
 ## Website functionalities:
 
-Database.
-User authentication system.
-User roles system.
-User management system.
-Appointments management system.
-News management system.
-Logout.
+- Database.
+- User authentication system.
+- User roles system.
+- User management system.
+- Appointments management system.
+- News management system.
+- Logout.
 
 ## Access:
 
@@ -126,5 +126,5 @@ Includes: A news management system through a table.
 
 ## Styles and other elements:
 
-Attractive and modern design.
-Fixed navigation bar with name and logo, highlighting the current section.
+- Attractive and modern design.
+- Fixed navigation bar with name and logo, highlighting the current section.
