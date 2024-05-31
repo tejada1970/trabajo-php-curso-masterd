@@ -94,35 +94,35 @@ Access to the different pages and management systems will depend on the "role" o
 
 **1. Homepage**
 
-Website front page with several sections.
+- Website front page with several sections.
 
 **2. News Page**
 
-Includes: A section where all the news created by the administrators is displayed.
+- Includes: A section where all the news created by the administrators is displayed.
 
 **3. Registration Page**
 
-Includes: A form for users to authenticate.
+- Includes: A form for users to authenticate.
 
 **4. Appointments Page**
 
-Includes: A system for managing appointments through forms.
+- Includes: A system for managing appointments through forms.
 
 **5. Profile Page**
 
-Includes: A form with user data, which can be modified.
+- Includes: A form with user data, which can be modified.
 
 **6. User Management Page**
 
-Includes: A user management system through a table.
+- Includes: A user management system through a table.
 
 **7. Appointments Management Page**
 
-Includes: An appointment management system through a table.
+- Includes: An appointment management system through a table.
 
 **8. News Management Page**
 
-Includes: A news management system through a table.
+- Includes: A news management system through a table.
 
 ## Styles and other elements:
 
