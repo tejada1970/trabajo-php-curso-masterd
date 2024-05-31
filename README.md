@@ -92,37 +92,21 @@ Access to the different pages and management systems will depend on the "role" o
 
 ## Website composition:
 
-**Homepage**
+- **Homepage:** Website front page with several sections.
 
-- Website front page with several sections.
+- **News Page:** Includes a section where all the news created by the administrators is displayed.
 
-**News Page**
+- **Registration Page:** Includes a form for users to authenticate.
 
-- Includes: A section where all the news created by the administrators is displayed.
+- **Appointments Page:** Includes a system for managing appointments through forms.
 
-**Registration Page**
+- **Profile Page:** Includes a form with user data, which can be modified.
 
-- Includes: A form for users to authenticate.
+- **User Management Page:** Includes a user management system through a table.
 
-**Appointments Page**
+- **Appointments Management Page:** Includes a appointment management system through a table.
 
-- Includes: A system for managing appointments through forms.
-
-**Profile Page**
-
-- Includes: A form with user data, which can be modified.
-
-**User Management Page**
-
-- Includes: A user management system through a table.
-
-**Appointments Management Page**
-
-- Includes: An appointment management system through a table.
-
-**News Management Page**
-
-- Includes: A news management system through a table.
+- **News Management Page:** Includes a news management system through a table.
 
 ## Styles and other elements:
 
