@@ -14,7 +14,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credenciales de acceso
 
-Para iniciar sesión como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Iniciar sesión" del proyecto.
+Para iniciar sesión como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Login/Inicio sesión" del proyecto.
 
 Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hacerlo registrándote desde la página "Registro" de la aplicación. (En este caso, sólo podrás registrarse como "usuario").
 
@@ -47,7 +47,7 @@ El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" 
 
 - **Página de registro:** Incluye un formulario para que los usuarios puedan registrarse.
 
-- **Página de login:** Incluye un formulario para que los usuarios puedan autenticarse.
+- **Página de login:** Incluye un formulario para que los usuarios puedan autenticarse e iniciar sesión.
 
 - **Página de Citas:** Incluye un sistema de gestión de citas a través de formularios.
 
@@ -63,4 +63,4 @@ El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" 
 
 - Diseño atractivo y moderno.
 - Barra de navegación fija con nombre y logo, resaltando la sección actual.
-- Pie de página dinamico con publicidad de la empresa, con logos de redes sociales y texto de aviso legal.
+- Pie de página con publicidad animada de la empresa, con logos de redes sociales y texto de aviso legal.
