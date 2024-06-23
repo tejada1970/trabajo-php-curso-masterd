@@ -1,114 +1,66 @@
-## Work description
+## License
 
-**You can find the complete statement of this work, in the last point of this document with the title (DESCRIPTION-WORK-PHP).**
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-**'It is important to note that this is a fictional project used for educational and practice purposes'**
+## Características
 
-## Characteristics
+**Utiliza base de datos**: Para garantizar el correcto funcionamiento del trabajo PHP, se proporciona la base de datos en formato SQL (small_pets.sql) que contiene los datos necesarios para su funcionamiento.
 
-**Use database:**
+'Es importante tener en cuenta que esta base de datos está diseñada exclusivamente para soportar el funcionamiento del trabajo PHP y no debe utilizarse para ningún otro propósito'.
 
-To ensure the correct functioning of PHP work, this database is provided in SQL format (small_pets.sql) that contains the data necessary for its operation.
+**Requisitos del servidor**: Para su correcto funcionamiento el proyecto debe ejecutarse desde un servidor. Por ejemplo, se recomienda utilizar XAMPP u otro servidor local para alojar la aplicación.
 
-**'It is important to note that this database is designed exclusively to support the operation of PHP work and should not be used for any other purpose'**
+**Es importante tener en cuenta que este es un proyecto ficticio utilizado con fines educativos y prácticos.**
 
-**Server requirements:**
+## Credenciales de acceso
 
-For its correct functioning, the project must be executed from a server. For example, it is recommended to use XAMPP or another local server to host the application.
+Para iniciar sesión como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Iniciar sesión" del proyecto.
 
-## Access credentials
+Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hacerlo registrándote desde la página "Registro" de la aplicación. (En este caso, sólo podrás registrarse como "usuario").
 
-To log in as an administrator or user and check the operation of the application, I have established two default credentials that are displayed on the "Login" page of the project.
 
-To log in with your own real or fictitious credentials, you can do so by registering from the "Registration" page of the application. (In this case, you can only register as "user").
+# Descripción
 
-## Download and Configuration in Local Environment
+## Objetivo del trabajo:
 
-**Download the Project:** 
-Click the "Code" button in this repository and select "Download ZIP".
+Crear un sitio web completo para una empresa ficticia, utilizando las tecnologías aprendidas hasta la fecha.
 
-**Project Extraction:**
-Create a new folder on your desktop. Go to the downloads folder and drag the downloaded ZIP file to the new folder to extract it.
+## Funcionalidades del sitio web:
 
-**Location of the Project on the Local Server:**
-Copy the extracted project folder and paste it into the folder on your local server. For example, in XAMPP, the folder is usually xampp/htdocs.
+- Base de datos.
+- Sistema de autenticación de usuarios.
+- Sistema de roles de usuario.
+- Sistema de gestión de usuarios.
+- Sistema de gestión de citas.
+- Sistema de gestión de noticias.
+- Cerrar sesión.
 
-**Local Environment Configuration:**
-Before running the project in your local environment, you will need to configure your local server and database. Follow the steps below:
+## Acceso:
 
-1. **Make sure you have XAMPP or a similar web server installed on your computer**.
+El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" de cada usuario autenticado, así como el acceso a los distintos enlaces de la barra de navegación.
 
-2. **Database Import Process:**
+## Composición del sitio web:
 
-    To ensure the correct functioning of the application, it is necessary to import the provided database. Follow these detailed steps to import successfully:
+- **Página de inicio:** Portada del sitio web con varias secciones.
 
-    1. On Windows, access the XAMPP Control Panel from the start menu (Start > XAMPP > XAMPP Control Panel) and run it as administrator to ensure you have the necessary permissions.
+- **Página de Noticias:** Incluye una sección donde se muestran todas las noticias creadas por los administradores.
 
-    2. Start both Apache and MySQL from the control panel. These are essential services for the web server and the database, respectively.
+- **Página de registro:** Incluye un formulario para que los usuarios puedan registrarse.
 
-    3. After starting MySQL, click the “Admin” button next to it to open the phpMyAdmin interface in your default web browser.
+- **Página de login:** Incluye un formulario para que los usuarios puedan autenticarse.
 
-    4. Within phpMyAdmin, select the "Database" option at the top and create a new database with the name 'small_pets'.
+- **Página de Citas:** Incluye un sistema de gestión de citas a través de formularios.
 
-    5. Return to the main phpMyAdmin page and select the 'Import' tab. Here, upload the provided SQL file along with the project files.
+- **Página de Perfil:** Incluye un formulario con los datos del usuario, el cual puede ser modificado.
 
-    6. Once the file is uploaded, click on the 'Import' button to start the import process. This step may take a while depending on the size of the database.
+- **Página de Gestión de Usuarios:** Incluye un sistema de gestión de usuarios a través de una tabla.
 
-    7. After the import completes successfully, you will receive an on-screen confirmation. Now the database is ready to be used by the application.
+- **Página de Gestión de Citas:** Incluye un sistema de gestión de citas a través de una tabla.
 
-3. **Fill in the following variables with your local environment information in the project's .env.php file:**
-   
-    - `SERVER`: Keep 'localhost' if local or change it to the address of your database server.
-    - `BD`: Keep the name 'small_pets' provided in the repository for correct import and operation.
-    - `USER`: Change 'username' to the username of your database.
-    - `PASSWORD`: Change 'password' to your database password.
+- **Página de Gestión de Noticias:** Incluye un sistema de gestión de noticias a través de una tabla.
 
-    **By following these steps, you will have correctly configured your local environment and you will have imported the database necessary for the application to function.**
+## Estilos y otros elementos:
 
-4. **Project View:** Open your web browser and navigate to (localhost/put here the folder name of the extracted project), this will load the project in your browser and you can interact with it locally. 
-
-5. **IMPORTANT:**
-"Credential security in a production project is of utmost importance to protect data integrity and user privacy. Credentials, such as usernames and passwords, provide privileged access to critical systems and databases. Inadvertent exposure of these credentials can result in devastating security breaches, compromising the confidentiality and availability of information. Therefore, it is essential to implement robust security practices, such as secure storage of credentials, use of appropriate access policies, and careful management of permissions. Additionally, it is important to educate the entire team on the importance of keeping credentials confidential and avoiding sharing sensitive information in unsecured environments. Protecting credentials is an essential component of any security strategy when developing and deploying applications in production."
-
-# DESCRIPTION-WORK-PHP
-
-## Objective of the work:
-
-Create a complete website for a fictitious company using the technologies and tools learned so far.
-
-## Website functionalities:
-
-- Database.
-- User authentication system.
-- User roles system.
-- User management system.
-- Appointments management system.
-- News management system.
-- Logout.
-
-## Access:
-
-Access to the different pages and management systems will depend on the "role" of each authenticated user, as well as access to the various links in the navigation bar.
-
-## Website composition:
-
-- **Homepage:** Website front page with several sections.
-
-- **News Page:** Includes a section where all the news created by the administrators is displayed.
-
-- **Registration Page:** Includes a form for users to authenticate.
-
-- **Appointments Page:** Includes a system for managing appointments through forms.
-
-- **Profile Page:** Includes a form with user data, which can be modified.
-
-- **User Management Page:** Includes a user management system through a table.
-
-- **Appointments Management Page:** Includes a appointment management system through a table.
-
-- **News Management Page:** Includes a news management system through a table.
-
-## Styles and other elements:
-
-- Attractive and modern design.
-- Fixed navigation bar with name and logo, highlighting the current section.
+- Diseño atractivo y moderno.
+- Barra de navegación fija con nombre y logo, resaltando la sección actual.
+- Pie de página dinamico con publicidad de la empresa, con logos de redes sociales y texto de aviso legal.
