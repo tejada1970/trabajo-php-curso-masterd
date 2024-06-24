@@ -62,6 +62,9 @@ El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" 
 ## Estilos y otros elementos:
 
 - Diseño atractivo y moderno.
-- Barra de navegación fija con nombre y logo, resaltando la sección actual.
+
+- Barra de navegación fija con nombre, logo, y enlaces que resaltan la página actual.
+
 - Barra de navegación dinamica para navegar entre las secciones de la página de inicio, resaltando la sección actual.
+
 - Pie de página con publicidad animada de la empresa, con logos de redes sociales y texto de aviso legal.
