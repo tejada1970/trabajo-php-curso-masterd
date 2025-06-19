@@ -24,7 +24,7 @@ Crear un sitio web completo para una empresa ficticia, utilizando las tecnologí
 
 ### 🔒 Acceso
 
-El acceso a páginas, enlaces de la barra de navegación y sistemas de gestión, variará dependiendo del **"rol"** que tenga cada usuario.
+El acceso a páginas, enlaces de la barra de navegación y sistemas de gestión, variará según el **"rol"** del usuario.
 
 ### 🗝️ Credenciales
 
