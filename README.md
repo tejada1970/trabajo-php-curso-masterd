@@ -1,31 +1,18 @@
-## License
+# 💻 trabajo-php-curso-masterd
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Trabajo obligatorio del Curso Superior en Programación de Páginas Web — Instituto Tecnológico MasterD.
 
-## Características
+> 📁 Este proyecto ha sido desarrollado únicamente con fines educativos y prácticos.
 
-**Utiliza base de datos**: Para garantizar el correcto funcionamiento del trabajo PHP, se proporciona la base de datos en formato SQL (small_pets.sql) que contiene los datos necesarios para su funcionamiento.
+---
 
-'Es importante tener en cuenta que esta base de datos está diseñada exclusivamente para soportar el funcionamiento del trabajo PHP y no debe utilizarse para ningún otro propósito'.
+## 📝 Descripción
 
-**Requisitos del servidor**: Para su correcto funcionamiento el proyecto debe ejecutarse desde un servidor. Por ejemplo, se recomienda utilizar XAMPP u otro servidor local para alojar la aplicación.
-
-**Es importante tener en cuenta que este es un proyecto ficticio utilizado con fines educativos y prácticos.**
-
-## Credenciales de acceso
-
-Para iniciar sesión como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Login/Inicio sesión" del proyecto.
-
-Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hacerlo registrándote desde la página "Registro" de la aplicación. (En este caso, sólo podrás registrarse como "usuario").
-
-
-# Descripción
-
-## Objetivo del trabajo:
+### 🎯 Objetivo del trabajo
 
 Crear un sitio web completo para una empresa ficticia, utilizando las tecnologías aprendidas hasta la fecha.
 
-## Funcionalidades del sitio web:
+### 🚀 Funcionalidades del sitio web
 
 - Base de datos.
 - Sistema de autenticación de usuarios.
@@ -35,11 +22,17 @@ Crear un sitio web completo para una empresa ficticia, utilizando las tecnologí
 - Sistema de gestión de noticias.
 - Cerrar sesión.
 
-## Acceso:
+#### 🔒 Acceso
 
 El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" de cada usuario autenticado, así como el acceso a los distintos enlaces de la barra de navegación.
 
-## Composición del sitio web:
+#### 🗝️ Credenciales
+
+Para iniciar sesión como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Login/Inicio sesión" del proyecto.
+
+Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hacerlo registrándote desde la página "Registro" de la aplicación. (En este caso, sólo podrás registrarse como "usuario").
+
+#### 🧱 Composición del sitio web
 
 - **Página de inicio:** Portada del sitio web con varias secciones.
 
@@ -59,7 +52,7 @@ El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" 
 
 - **Página de Gestión de Noticias:** Incluye un sistema de gestión de noticias a través de una tabla.
 
-## Estilos y otros elementos:
+#### 🎨 Estilos y otros elementos
 
 - Diseño atractivo y moderno.
 
@@ -68,3 +61,31 @@ El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" 
 - Barra de navegación dinamica para navegar entre las secciones de la página de inicio, resaltando la sección actual.
 
 - Pie de página con publicidad animada de la empresa, con logos de redes sociales y texto de aviso legal.
+
+---
+
+## ✨ Características
+
+📂 Este proyecto contiene **base de datos**. Para garantizar el correcto funcionamiento del trabajo PHP, se proporciona la **base de datos** en formato SQL (`small_pets.sql`) que contiene los datos necesarios para su funcionamiento.
+
+'Es importante tener en cuenta que esta base de datos está diseñada exclusivamente para soportar el funcionamiento del trabajo PHP y no debe utilizarse para ningún otro propósito'.
+
+🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un **servidor**. Por ejemplo, se recomienda utilizar **XAMPP** para alojar la aplicación.
+
+**Es importante tener en cuenta que este es un proyecto ficticio utilizado con fines educativos y prácticos.**
+
+---
+
+## 📥 ¿Cómo clonar y ejecutar este proyecto?
+
+Toda la información necesaria sobre cómo clonar y ejecutar este proyecto en un entorno local con **XAMPP**, la encontrarás en esta guía de mi repositorio `guias-desarrollo`:
+
+- 📄 [Clonar proyecto estático en XAMPP (Windows)](https://github.com/tejada1970/guias-desarrollo/blob/master/clonar/clonar-proyecto-estatico-en-xampp-windows.md)
+
+> 💡 Recuerda copiar el enlace de la URL de este repositorio, disponible en: `<> Code / HTTPS`, que te servirá para reemplazar el enlace de ejemplo en la guía para clonar el proyecto.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
