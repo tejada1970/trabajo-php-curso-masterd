@@ -64,9 +64,9 @@ En la página **`Login/Inicio sesión`** se proporcionan dos credenciales predet
 
 ## ✨ Características
 
-📂 Este proyecto usa **base de datos**. Para garantizar el correcto funcionamiento del proyecto se proporciona la base de datos en formato SQL (`small_pets.sql`) con los datos necesarios para su funcionamiento.
+📂 Este proyecto incluye una **base de datos** que se proporciona en formato SQL (`small_pets.sql`) con los datos necesarios para garantizar el correcto funcionamiento del proyecto.
 
-> ⚠️ **Importante:** La base de datos `small_pets.sql` está diseñada exclusivamente para soportar el funcionamiento de este proyecto *`trabajo-php-curso-masterd`* y no debe utilizarse para ningún otro propósito.
+> ⚠️ **Importante:** La base de datos **`small_pets.sql`** está diseñada exclusivamente para soportar el funcionamiento de este proyecto **`trabajo-php-curso-masterd`** y no debe utilizarse para ningún otro propósito.
 
 🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un **servidor**. Por ejemplo, se recomienda utilizar **XAMPP** para alojar la aplicación.
 
