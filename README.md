@@ -24,7 +24,7 @@ Crear un sitio web completo para una empresa ficticia, utilizando las tecnologí
 
 ### 🔒 Acceso
 
-El acceso a las diferentes páginas y sistemas de gestión dependerá del **"rol"** de cada usuario autenticado, así como el acceso a los distintos enlaces de la barra de navegación.
+El acceso a páginas, enlaces de la barra de navegación y sistemas de gestión, variará dependiendo del **"rol"** que tenga cada usuario.
 
 ### 🗝️ Credenciales
 
@@ -68,17 +68,17 @@ En la página **`Login/Inicio sesión`** se proporcionan dos credenciales predet
 
 > ⚠️ **Importante:** La base de datos **`small_pets.sql`** está diseñada exclusivamente para soportar el funcionamiento de este proyecto **`trabajo-php-curso-masterd`** y no debe utilizarse para ningún otro propósito.
 
-🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un **servidor**. Por ejemplo, se recomienda utilizar **XAMPP** para alojar la aplicación.
+🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un servidor. Se recomienda utilizar (**XAMPP**).
 
 ---
 
 ## 📥 ¿Cómo clonar y ejecutar este proyecto?
 
-Toda la información necesaria sobre cómo clonar y ejecutar este proyecto en un entorno local con **XAMPP**, la encontrarás en esta guía de mi repositorio `guias-desarrollo`:
+En esta guía, encontrarás toda la información necesaria sobre cómo clonar y ejecutar este proyecto en un entorno local con **XAMPP**:
 
 - 📄 [Clonar proyecto estático en XAMPP (Windows)](https://github.com/tejada1970/guias-desarrollo/blob/master/clonar/clonar-proyecto-estatico-en-xampp-windows.md)
 
-> 💡 Recuerda copiar el enlace de la URL de este repositorio, disponible en: `<> Code / HTTPS`, que te servirá para reemplazar el enlace de ejemplo en la guía para clonar el proyecto.
+> 💡 Recuerda copiar la URL de este repositorio `<> Code / HTTPS` para reemplazar la URL de ejemplo que se proporciona en la guía para clonar el proyecto.
 
 ---
 
