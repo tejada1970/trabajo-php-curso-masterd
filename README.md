@@ -22,17 +22,17 @@ Crear un sitio web completo para una empresa ficticia, utilizando las tecnologí
 - Sistema de gestión de noticias.
 - Cerrar sesión.
 
-#### 🔒 Acceso
+### 🔒 Acceso
 
 El acceso a las diferentes páginas y sistemas de gestión dependerá del "rol" de cada usuario autenticado, así como el acceso a los distintos enlaces de la barra de navegación.
 
-#### 🗝️ Credenciales
+### 🗝️ Credenciales
 
 Para iniciar sesión como administrador o usuario y comprobar el funcionamiento de la aplicación, he establecido dos credenciales predeterminadas que se muestran en la página "Login/Inicio sesión" del proyecto.
 
 Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hacerlo registrándote desde la página "Registro" de la aplicación. (En este caso, sólo podrás registrarse como "usuario").
 
-#### 🧱 Composición del sitio web
+### 🧱 Composición del sitio web
 
 - **Página de inicio:** Portada del sitio web con varias secciones.
 
@@ -52,7 +52,7 @@ Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hac
 
 - **Página de Gestión de Noticias:** Incluye un sistema de gestión de noticias a través de una tabla.
 
-#### 🎨 Estilos y otros elementos
+### 🎨 Estilos y otros elementos
 
 - Diseño atractivo y moderno.
 
@@ -66,13 +66,11 @@ Para iniciar sesión con tus propias credenciales reales o ficticias, puedes hac
 
 ## ✨ Características
 
-📂 Este proyecto contiene **base de datos**. Para garantizar el correcto funcionamiento del trabajo PHP, se proporciona la **base de datos** en formato SQL (`small_pets.sql`) que contiene los datos necesarios para su funcionamiento.
+📂 Este proyecto contiene **base de datos**. Para garantizar el correcto funcionamiento del t**rabajo PHP**, se proporciona la **base de datos** en formato SQL (`small_pets.sql`) con los datos necesarios para su funcionamiento.
 
-'Es importante tener en cuenta que esta base de datos está diseñada exclusivamente para soportar el funcionamiento del trabajo PHP y no debe utilizarse para ningún otro propósito'.
+> ⚠️ **Importante:** Esta base de datos está diseñada exclusivamente para soportar el funcionamiento del **trabajo PHP** y no debe utilizarse para ningún otro propósito'.
 
 🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un **servidor**. Por ejemplo, se recomienda utilizar **XAMPP** para alojar la aplicación.
-
-**Es importante tener en cuenta que este es un proyecto ficticio utilizado con fines educativos y prácticos.**
 
 ---
 
