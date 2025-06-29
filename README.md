@@ -64,11 +64,17 @@ En la página **`Login/Inicio sesión`** se proporcionan dos credenciales predet
 
 ## ✨ Características
 
-📂 Este proyecto incluye una **base de datos** que se proporciona en formato SQL (`small_pets.sql`) con los datos necesarios para garantizar el correcto funcionamiento del proyecto.
+🌐 Para su correcto funcionamiento, el proyecto debe ejecutarse desde un servidor. Se recomienda utilizar **XAMPP**.
 
-> ⚠️ **Importante:** La base de datos **`small_pets.sql`** está diseñada exclusivamente para soportar el funcionamiento de este proyecto **`trabajo-php-curso-masterd`** y no debe utilizarse para ningún otro propósito.
+📂 Este proyecto incluye una **base de datos** en formato SQL (`small_pets.sql`) con los datos necesarios para garantizar su correcto funcionamiento.
 
-🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un servidor. Se recomienda utilizar (**XAMPP**).
+### 📝 Observaciones
+
+> ⚠️ **Aviso importante:** La base de datos **`small_pets.sql`** está diseñada exclusivamente para el proyecto **`trabajo-php-curso-masterd`** y no debe utilizarse para ningún otro propósito.
+
+Sobre cumplir con el objetivo que se pedía en este trabajo y funcionar todo correctamente, la arquitectura general del proyecto, incluida su base de datos, **no está optimizada ni diseñada para usarse como base en entornos reales. No se recomienda utilizarla tal cual.**
+
+No obstante, parte del código fuente puede resultar **útil e interesante** como referencia. Se pueden reutilizar fragmentos y adaptarlos a desarrollos personales o profesionales, según las necesidades de cada caso.
 
 ---
 
@@ -78,7 +84,7 @@ En esta guía, encontrarás toda la información necesaria sobre cómo clonar y 
 
 - 📄 [Clonar proyecto estático en XAMPP (Windows)](https://github.com/tejada1970/guias-desarrollo/blob/master/clonar/clonar-proyecto-estatico-en-xampp-windows.md)
 
-> 💡 Recuerda copiar la URL de este repositorio `<> Code / HTTPS` para reemplazar la URL de ejemplo que se proporciona en la guía para clonar el proyecto.
+> 💡 Recuerda copiar la URL de este repositorio desde `<> Code / HTTPS` para reemplazar la URL de ejemplo que se proporciona en la guía para clonar el proyecto.
 
 ---
 

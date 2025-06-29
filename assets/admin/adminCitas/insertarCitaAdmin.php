@@ -1,6 +1,13 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
+    if (isset($_SESSION['usuario'])) {
+        if(isset($_SESSION['rol'])){
+            if ($_SESSION['rol'] === 'admin') {
+                $_SESSION['userCitaAdmin'] = $_SESSION['idUser'];
+            }
+        }
+    }
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,20 +23,33 @@
 <body class="imgFondo">
     <main>
         <?php
-            // declaro la variable de sesión 'idUserGo' para volver del proceso de la 'cita' a insetar.
-            $_SESSION['idUserGo'] = 1;
-
             // validar datos del formulario.
             if (isset($_POST['submitCitaAdmin'])) {
                 // guardar datos 'userCitaAdmin' y 'textCitaAdmin'.
                 $_SESSION['userCitaAdmin'] = $_POST['userCitaAdmin'];
                 $_SESSION['textCitaAdmin'] = $_POST['textCitaAdmin'];
-                $valRegistro = SQL::validarInsertCitaAdmin();
+                $resultadoValidacion = SQL::validarInsertCitaAdmin();
+                if (is_array($resultadoValidacion)) {
+                    // La validación fue exitosa, devuelve los datos y guarda el registro
+                    list($idUsuario, $fechaCita, $motivoCita) = $resultadoValidacion;
+                    $returnOk = SQL::insertarCita($idUsuario, $fechaCita, $motivoCita);
+                    if ($returnOk) {
+                        // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                        header('location:citas_administracion.php?msgConfirm=Nueva cita creada&tareaAdmin=verCitasAdmin');
+                        exit();
+                    }
+                } else {
+                    // La validación falló, muestra el mensaje de error.
+                    $valRegistro = $resultadoValidacion;
+                }
             }
         ?>
         <!-- formulario insertar citas admin -->
         <div class="containAll flex">
             <div class="container">
+                <div>
+                    <p></p>
+                </div>
                 <div class="animate__animated animate__backInDown">
                     <p class="validarDatos"><?php echo $valRegistro; ?></p>
                 </div>
@@ -45,7 +65,7 @@
                         </div>
                     </div>
                     <div class="containerInputs">
-                        <label for="userCitaAdmin" class="colorLabel">* User</label>
+                        <label for="userCitaAdmin" class="colorLabel">* ID-User</label>
                         <input type="text" id="userCitaAdmin" value="<?php echo $_SESSION['userCitaAdmin'] ?? '' ?>" name="userCitaAdmin">
                         <label for="fechaCitaAdmin" class="colorLabel">* Fecha Cita</label>
                         <input type="date" id="fechaCitaAdmin" name="fechaCitaAdmin">

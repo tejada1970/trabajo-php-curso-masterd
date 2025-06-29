@@ -15,7 +15,7 @@
             // muestra una confirmación al 'usuario'.
             $valRegistro = null;
             if (isset($_GET['msgConfirm'])) {
-                $valRegistro = $_GET['msgConfirm'];
+                $valRegistro = $valRegistro;
             }
         ?>
         <!-- formulario para mostrar las citas con 'Ajax' -->

@@ -10,11 +10,8 @@
     }
     else {
         if (isset($_SESSION['usuario'])) {
-        
             if(isset($_SESSION['rol'])){
-        
                 switch($_SESSION['rol']){
-        
                     case 'admin':
                         // asigno la barra de navegación para ADMIN.
                         $_SESSION['header'] = 'headerAdminPerfil';
@@ -34,9 +31,13 @@
         }
     }
 
-    include('../assets/archivosPHP/SQL.php');
+    require_once __DIR__ . '/../assets/archivosPHP/SQL.php';
     $valRegistro = null;
     $valConfirm = null;
+
+    if (isset($_GET['msgConfirm'])) {
+        require_once __DIR__ . '/../assets/archivosPHP/messages.php';
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,15 +53,10 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/registro.css">
     <link rel="stylesheet" href="../css/perfil.css">
+    <link rel="stylesheet" href="../assets/archivosHTML/footerHTML/footer.css">
 </head>
 <body class="imgFondo">
     <?php
-        // Muestra una confirmación al 'usuario', de la actualización del perfil.
-        if (isset($_GET['msgConfirm'])) {
-            include('../assets/archivosPHP/messages.php');
-            $valConfirm = null;
-        }
-
         // validar datos del formulario.
         if (isset($_POST['submitPerfil'])) {
             $valRegistro = SQL::validarPerfil();
@@ -180,15 +176,13 @@
             </div>
         </div>
     </main>
-    <footer>
-        <div class="paspartu">
-            <iframe src="../assets/archivosHTML/footerHTML/footer.html"></iframe>
-        </div>
-    </footer>
-
+    <!-- footer -->
+    <?php include '../assets/archivosHTML/footerHTML/footer.html'; ?>
     <!-- scripts -->
     <script src="../scripts/obtenerSexo.js"></script>
     <script src="../scripts/burguer.js"></script>
     <script src="../scripts/avatar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="../assets/archivosHTML/footerHTML/footer.js"></script>
 </body>
 </html>

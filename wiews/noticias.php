@@ -48,6 +48,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/noticias.css">
+    <link rel="stylesheet" href="../assets/archivosHTML/footerHTML/footer.css">
 </head>
 <body class="imgFondo">
     <?php
@@ -147,14 +148,12 @@
             </section>
         </div>
     </main>
-    <footer>
-        <div class="paspartu">
-            <iframe src="../assets/archivosHTML/footerHTML/footer.html"></iframe>
-        </div>
-    </footer>
-
+    <!-- footer -->
+    <?php include '../assets/archivosHTML/footerHTML/footer.html'; ?>
     <!-- scripts -->
     <script src="../scripts/burguer.js"></script>
     <script src="../scripts/avatar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="../assets/archivosHTML/footerHTML/footer.js"></script>
 </body>
 </html>

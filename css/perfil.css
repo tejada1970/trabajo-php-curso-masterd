@@ -1,9 +1,9 @@
-
+/*************************/
 /***** STYLES PERFIL *****/
+/*************************/
 @media only screen and (min-width: 320px) {
     .sexo_flex {gap: 0; flex-wrap: wrap;}
 }
-
 /* forms: registro(visit), perfil(user y admin), insertarUserAdmin, modificarUserAdmin */
 @media only screen and (min-width: 768px) {
     .formWidth {max-width: 31.25rem; min-width: 31.25rem;}

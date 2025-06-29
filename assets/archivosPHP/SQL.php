@@ -95,7 +95,8 @@ class SQL {
                 }
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarRegistro()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -104,104 +105,64 @@ class SQL {
     */
     public static function validarRegistroAdmin() {
         try {
-            // Comprobar mediante una expresión regular, el 'email' recibido.
-            $expresionEmail = "/\w+@\w+\.+[a-z]/";
-        
-            // Comprobar mediante una expresión regular, el 'telefono' recibido.
-            $expresionTelf = "/^([0-9]{9})$/";
-        
-            /* Comprobar que los campos obligatorios contienen datos y que no superen la longitud de caracteres especificada. */
-            if (empty($_POST['nombre']) || empty($_POST['apellidos']) || empty($_POST['email']) || 
-                empty($_POST['telefono']) || empty($_POST['birthday']) || empty($_POST['usuario']) || 
-                empty($_POST['password']) || empty($_POST['rol'])) {
-                
-                return 'los campos marcados ( * ) son obligatorios';
-        
-            }elseif (strlen($_POST['nombre'])>30) {
-                return 'el nombre: no debe superar 30 caracteres';
-            }
-            elseif (strlen($_POST['apellidos'])>60) {
-                return 'los apellidos: no deben superar 60 caracteres';
-            }
-            elseif(!preg_match($expresionEmail, $_POST['email'])) {
-                return 'el email no es valido';
-            }
-            elseif (strlen($_POST['email'])>100) {
-                return 'el email: no debe superar 100 caracteres';
-            }
-            elseif (!preg_match($expresionTelf, $_POST['telefono'])) {
-                return 'el telefono: debe ser de 9 caracteres numericos';      
+            // Expresiones para validar
+            $expresionTelefono = "/^\d{9}$/";
 
-            }elseif (strlen($_POST['direccion'])>100) {
-                return 'la direccion: no debe superar 100 caracteres';
-            }
-            elseif (strlen($_POST['usuario'])>50) {
-                return 'la direccion: no debe superar 100 caracteres';
-            }
-            else {
-                // Compruebo si la fecha es mayor que la actual.
-                $milisegundos = round(microtime(true) * 1000); // obtener la 'fecha actual' en milisegundos.
-                $milisegundosCita = strtotime($_POST['birthday']) * 1000; // obtener la 'birthday' en milisegundos.
-
-                if ($milisegundosCita > $milisegundos) {
-                    return 'la fecha: no puede ser mayor a la actual';
+            // Campos obligatorios
+            $camposObligatorios = ['nombre', 'apellidos', 'email', 'telefono', 'birthday', 'usuario', 'password', 'rol'];
+            foreach ($camposObligatorios as $campo) {
+                if (empty($_POST[$campo])) {
+                    return 'Los campos marcados ( * ) son obligatorios';
                 }
-                else {
-                    // Compruebo el 'rol'.
-                    if ($_POST['rol'] === 'user' || $_POST['rol'] === 'admin') {
+            }
 
-                        $rol = htmlspecialchars($_POST['rol']);
+            // Longitudes máximas
+            if (strlen($_POST['nombre']) > 30) return 'El nombre no debe superar 30 caracteres';
+            if (strlen($_POST['apellidos']) > 60) return 'Los apellidos no deben superar 60 caracteres';
+            if (strlen($_POST['email']) > 100) return 'El email no debe superar 100 caracteres';
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) return 'El email no es válido';
+            if (!preg_match($expresionTelefono, $_POST['telefono'])) return 'El teléfono debe ser de 9 dígitos numéricos';
+            if (strlen($_POST['direccion'] ?? '') > 100) return 'La dirección no debe superar 100 caracteres';
+            if (strlen($_POST['usuario']) > 50) return 'El usuario no debe superar 50 caracteres';
 
-                        // Comprueba si existe 'EMAIL' en la base de datos.
-                        $email = $_POST['email'];
-                        $resultado = SQL::comprobarEmail($email);
-                        if (count($resultado)>0) {
-                            return 'el email "'.$email.'" ya esta registrado';
-                        }
+            // Fecha de nacimiento no futura
+            $fechaNacimiento = strtotime($_POST['birthday']);
+            if ($fechaNacimiento === false || $fechaNacimiento > time()) {
+                return 'La fecha no puede ser mayor a la actual';
+            }
 
-                        // Comprueba si existe 'USUARIO' en la base de datos.
-                        $usuario = $_POST['usuario'];
-                        $resultado = SQL::comprobarUsuario($usuario);
-                        if (count($resultado)>0) {
-                            return 'el usuario "'.$usuario.'" ya esta registrado';
-                        }
+            // Rol válido
+            $rol = $_POST['rol'];
+            if (!in_array($rol, ['user', 'admin'])) return 'El rol debe ser "user" o "admin"';
 
-                        // Introducir todos los datos recogidos en sus respectivas variables.
-                        $nombre = htmlspecialchars($_POST['nombre']);
-                        $apellidos = htmlspecialchars($_POST['apellidos']);
-                        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                        $telefono = htmlspecialchars($_POST['telefono']);
-                        $fecha_nacimiento = htmlspecialchars($_POST['birthday']);
+            // Email único
+            $email = $_POST['email'];
+            $resultado = SQL::comprobarEmail($email);
+            if ($resultado !== false && count($resultado) > 0) {
+                return 'El email "' . $email . '" ya está registrado';
+            }
+
+            // Usuario único
+            $usuario = $_POST['usuario'];
+            $resultado = SQL::comprobarUsuario($usuario);
+            if ($resultado !== false && count($resultado) > 0) {
+                return 'El usuario "' . $usuario . '" ya está registrado';
+            }
+
+            // Recolectar datos limpios
+            $nombre = htmlspecialchars($_POST['nombre']);
+            $apellidos = htmlspecialchars($_POST['apellidos']);
+            $telefono = htmlspecialchars($_POST['telefono']);
+            $direccion = !empty($_POST['direccion']) ? htmlspecialchars($_POST['direccion']) : null;
+            $sexo = !empty($_POST['sexo']) ? htmlspecialchars($_POST['sexo']) : null;
+            $usuario = htmlspecialchars($_POST['usuario']);
+            $password = $_POST['password']; // ⚠️ no aplicar htmlspecialchars a contraseñas
             
-                        // Dirección
-                        if ($_POST['direccion'] === '') {
-                            $direccion = null;
-                        }
-                        else {
-                            $direccion = htmlspecialchars($_POST['direccion']);
-                        }
-                
-                        // Sexo
-                        if ($_POST['sexo'] === '') {
-                            $sexo = null;
-                        }
-                        else {
-                            $sexo = htmlspecialchars($_POST['sexo']);
-                        }
-                
-                        $usuario = htmlspecialchars($_POST['usuario']);
-                        $password = htmlspecialchars($_POST['password']);
+            return [$nombre, $apellidos, $email, $telefono, date('Y-m-d', $fechaNacimiento), $direccion, $sexo, $usuario, $password, $rol];
 
-                        // Enviar los datos a insertarUserAdmin() para su inserción en la base de datos.
-                        SQL::insertarUserAdmin($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $password, $rol);
-                    }
-                    else {
-                        return 'el rol: debe ser "user" o "admin"';
-                    }
-                }
-            }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarRegistroAdmin()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -221,7 +182,8 @@ class SQL {
                 SQL::comprobarLogin($usuarioLogin, $passwordLogin);
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarLogin() " . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -304,7 +266,8 @@ class SQL {
                 }
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarPerfil()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -312,73 +275,74 @@ class SQL {
         Recoger datos del formulario (insertarNoticiasAdmin.php), 'validarlos e insertarlos'.
     */
     public static function validarInsertNoticiasAdmin() {
+        $conexion = null;
         try {
-            // Comprobar que los campos obligatorios contienen datos y que no superen la longitud de caracteres especificada.
-            if (empty($_POST['tituloInsertNoticiaAdmin']) || empty($_POST['textInsertNoticiaAdmin']) || empty($_POST['fechaInsertNoticiaAdmin'])) {
+            if (
+                empty($_POST['tituloInsertNoticiaAdmin']) || 
+                empty($_POST['textInsertNoticiaAdmin']) || 
+                empty($_POST['fechaInsertNoticiaAdmin'])
+            ) {
                 return 'los campos marcados ( * ) son obligatorios';
-            }else {
+            } else {
                 // Comprobar si existe el titulo de la noticia.
                 $titulo = $_POST["tituloInsertNoticiaAdmin"];
                 $resultado = SQL::comprobarTituloNoticiaAdmin($titulo);
 
                 if (count($resultado) === 1) {
                     return 'el titulo ya existe';
-                }
-                else {
-                    // Comprobar la foto.
-                    if (isset($_FILES['foto']['name'])) {
-
+                } else {
+                    if (isset($_FILES['foto']['name']) && $_FILES['foto']['name'] !== '') {
                         $tipoArchivo = $_FILES['foto']['type'];
-            
-                        // Permiso solo para subir los archivos especificados (image/* seria para todo tipo de imagenes).
-                        $permitido = array("image/jpeg", "image/jpg", "image/png");
-            
-                        if(in_array($tipoArchivo, $permitido) == false) {
-                            return'no se ha seleccionado ningun archivo o el archivo seleccionado no esta permitido';
-            
-                        }else {
-                            $nombreArchivo = $_FILES['foto']['name'];
-                            $tamanoArchivo = $_FILES['foto']['size'];
-                            /*
-                                - Extraer los binarios de la imagen -
-                                Para ello abrimos el archivo temporal donde se guarda la imagen con su nombre correspondiente,
-                                mediante la función 'fopen()'. 'r', es para especificar que el archivo sea de modo lectura.
-                                A continuación extraemos los binarios.
-                                mediante la función 'fread()' leemos el archivo que hemos abierto con la función 'fopen()' y guardado en '$imagenSubida'.
-                                Y por último con la funcion 'mysqli_escape_string' limpiamos los binarios.
-                            */
-                            $imagenSubida = fopen($_FILES['foto']['tmp_name'], 'r');
-                            $binariosImage = fread($imagenSubida, $tamanoArchivo);
-            
-                            $idUser = $_POST["idUserInsertNoticiaAdmin"];
-                            $titulo = $_POST["tituloInsertNoticiaAdmin"];
-                            $texto = $_POST["textInsertNoticiaAdmin"];
-                            $fechaNoticia = $_POST["fechaInsertNoticiaAdmin"];
-            
-                            // Insertar los datos en la tabla 'noticias'.
-                            $conexion = mysqli_connect("127.0.0.1", "root", "", "small_pets");
-                            mysqli_set_charset($conexion, "utf8");
-                            $binariosImage = mysqli_escape_string($conexion, $binariosImage);
-                
-                            $sentencia = "INSERT INTO noticias (idUser, titulo, nombre, imagen, tipo, texto, fecha_noticia)
-                            VALUES ('$idUser','$titulo', '$nombreArchivo', '$binariosImage', '$tipoArchivo', '$texto', '$fechaNoticia')";
-            
-                            $resultado = mysqli_query($conexion, $sentencia);
-
-                            if($resultado) {
-                                /**  Redireccionar al 'usuario' a la página 'noticias_administracion.php'. **/
-                                header('location:noticias_administracion.php?msgConfirm=Noticia Agregada&tareaAdmin=verNoticiasAdmin');
-                            }
-                            mysqli_close($conexion);
+                        $permitido = ["image/jpeg", "image/jpg", "image/png"];
+                        if (!in_array($tipoArchivo, $permitido)) {
+                            return 'No se ha seleccionado ningún archivo o el archivo seleccionado no está permitido';
                         }
-                    }
-                    else {
-                        return'no se ha seleccionado ningun archivo';
+
+                        $tamanoArchivo = $_FILES['foto']['size'];
+                        $maximoPermitido = 2 * 1024 * 1024; // 2MB
+                        if ($tamanoArchivo > $maximoPermitido) {
+                            return 'El archivo es demasiado grande. Máximo permitido: 2MB.';
+                        }
+                        if ($tamanoArchivo < 1024) { // 1 KB
+                            return 'El archivo es demasiado pequeño o está dañado.';
+                        }
+
+                        $nombreArchivo = $_FILES['foto']['name'];
+                        $binariosImage = file_get_contents($_FILES['foto']['tmp_name']);
+
+                        $idUser = $_POST["idUserInsertNoticiaAdmin"];
+                        $texto = $_POST["textInsertNoticiaAdmin"];
+                        $fechaNoticia = $_POST["fechaInsertNoticiaAdmin"];
+
+                        $conexion = mysqli_connect("127.0.0.1", "root", "", "small_pets");
+                        mysqli_set_charset($conexion, "utf8");
+                        $binariosImage = mysqli_escape_string($conexion, $binariosImage);
+                        $titulo = mysqli_escape_string($conexion, $titulo);
+                        $texto = mysqli_escape_string($conexion, $texto);
+                        $fechaNoticia = mysqli_escape_string($conexion, $fechaNoticia);
+
+                        $sentencia = "INSERT INTO noticias (idUser, titulo, nombre, imagen, tipo, texto, fecha_noticia)
+                                    VALUES ('$idUser', '$titulo', '$nombreArchivo', '$binariosImage', '$tipoArchivo', '$texto', '$fechaNoticia')";
+
+                        $resultado = mysqli_query($conexion, $sentencia);
+
+                        if ($resultado) {
+                            return true;
+                        } else {
+                            return 'Error al insertar en la base de datos';
+                        }
+                    } else {
+                        return 'No se ha seleccionado ningún archivo';
                     }
                 }
             }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarInsertNoticiasAdmin()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($conexion) {
+                mysqli_close($conexion);
+            }
         }
     }
 
@@ -387,34 +351,38 @@ class SQL {
     */
     public static function validarModDatosNoticiasAdmin() {
         try {
-            // Comprobar que los campos obligatorios contienen datos y que no superen la longitud de caracteres especificada.
+            // Validar campos obligatorios
             if (empty($_POST['tituloModNoticiaAdmin']) || empty($_POST['textModNoticiaAdmin']) || empty($_POST['fechaModNoticiaAdmin'])) {
-                return 'los campos marcados ( * ) son obligatorios';
-            }else {
-                // Obtengo el 'id' del 'titulo' de la noticia y el 'idUser' de quien la escrito.
-                $idNoticia = $_POST['idModNoticiaAdmin'];
-                $idUser = $_POST['idUserModNoticiaAdmin'];
-                
-                // Comprobar si existe el 'titulo' de la noticia.
-                $titulo = $_POST["tituloModNoticiaAdmin"];
-                $resultado = SQL::comprobarTituloNoticiaAdmin($titulo);
-
-                // Si existe, pero pertenece a la misma 'idNoticia' y mismo 'idUser' (se guarda), sino, se rechaza.
-                if (count($resultado)>0 && $resultado[0]-> idNoticia == $idNoticia && $resultado[0]-> titulo == $titulo
-                && $resultado[0]-> idUser == $idUser || count($resultado)<1) {
-
-                    // Obtengo el 'texto' y la 'fecha' de la 'noticia'.
-                    $textoNoticia = $_POST['textModNoticiaAdmin'];
-                    $fechaNoticia = $_POST['fechaModNoticiaAdmin'];
-
-                    // Enviar los datos a modificarDatosNoticiaAdmin() para actualizar los datos de la 'noticia' en la base de datos.
-                    SQL::modificarDatosNoticiaAdmin($idNoticia, $idUser, $titulo, $textoNoticia, $fechaNoticia);
-                }else {
-                    return 'el titulo ya existe';
-                }
+                return 'Los campos marcados ( * ) son obligatorios';
             }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarModDatosNoticiasAdmin()" . $e->getMessage();
+
+            // Obtener IDs y título
+            $idNoticia = $_POST['idModNoticiaAdmin'];
+            $idUser = $_POST['idUserModNoticiaAdmin'];
+            $titulo = $_POST['tituloModNoticiaAdmin'];
+
+            // Comprobar si existe título duplicado
+            $resultado = SQL::comprobarTituloNoticiaAdmin($titulo);
+
+            // Validar: si existe título pero es la misma noticia y usuario, o no existe el título, continuar
+            if ((count($resultado) > 0 && 
+                $resultado[0]->idNoticia == $idNoticia && 
+                $resultado[0]->titulo == $titulo && 
+                $resultado[0]->idUser == $idUser) || count($resultado) < 1) {
+
+                // Obtener datos para actualizar
+                $textoNoticia = $_POST['textModNoticiaAdmin'];
+                $fechaNoticia = $_POST['fechaModNoticiaAdmin'];
+
+                // Retornamos los datos para hacer la modificación
+                return [$idNoticia, $idUser, $titulo, $textoNoticia, $fechaNoticia];
+
+            } else {
+                return 'El título ya existe.';
+            }
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -423,42 +391,64 @@ class SQL {
         'Validarla e insertarla'.
     */
     public static function validarModImgNoticiasAdmin() {
+        $conexion = null;
         try {
-            // Comprobar la foto.
-            if (isset($_FILES['foto']['name'])) {
-
-                $tipoArchivo = $_FILES['foto']['type'];
-                $permitido = array("image/jpeg", "image/jpg", "image/png");
-
-                if(in_array($tipoArchivo, $permitido) == false) {
-                    return'no se ha seleccionado ningun archivo o el archivo seleccionado no esta permitido';
-                }else {
-                    $titulo = $_POST["tituloModImgNoticiaAdmin"];
-                    $nombreArchivo = $_FILES['foto']['name'];
-                    $tamanoArchivo = $_FILES['foto']['size'];
-                    $imagenSubida = fopen($_FILES['foto']['tmp_name'], 'r');
-                    $binariosImage = fread($imagenSubida, $tamanoArchivo);
-                    
-                    // Actualizar la imagen (foto) en la tabla 'noticias'.
-                    $conexion = mysqli_connect("127.0.0.1", "root", "", "small_pets");
-                    mysqli_set_charset($conexion, "utf8");
-                    $binariosImage = mysqli_escape_string($conexion, $binariosImage);
-        
-                    $sentencia = "UPDATE noticias SET nombre = '$nombreArchivo', imagen = '$binariosImage', tipo = '$tipoArchivo' WHERE titulo = '$titulo'"; 
-                    $resultado = mysqli_query($conexion, $sentencia);
-
-                    if($resultado) {
-                        /**  Redireccionar al 'usuario' a la página 'noticias_administracion.php'. **/
-                        header('location:noticias_administracion.php?msgConfirm=Imagen Actualizada&tareaAdmin=verNoticiasAdmin');
-                    }
-                    mysqli_close($conexion);      
-                }
+            if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
+                return 'No se ha seleccionado ningún archivo o se ha producido un error al subirlo.';
             }
-            else {
-                return'no se ha seleccionado ningun archivo';
+
+            $permitido = ["image/jpeg", "image/jpg", "image/png"];
+            $tipoArchivo = $_FILES['foto']['type'];
+
+            if (!in_array($tipoArchivo, $permitido)) {
+                return 'El archivo seleccionado no está permitido.';
             }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarModImgNoticiasAdmin()" . $e->getMessage();
+
+            // Datos de la imagen
+            $titulo = $_POST["tituloModImgNoticiaAdmin"] ?? '';
+            if (empty($titulo)) {
+                return 'El título es obligatorio.';
+            }
+
+            $tamanoArchivo = $_FILES['foto']['size'];
+            $maximoPermitido = 2 * 1024 * 1024; // 2 MB
+            if ($tamanoArchivo > $maximoPermitido) {
+                return 'El archivo es demasiado grande. Máximo permitido: 2MB.';
+            }
+            if ($tamanoArchivo < 1024) { // 1 KB
+                return 'El archivo es demasiado pequeño o está dañado.';
+            }
+            $nombreArchivo = $_FILES['foto']['name'];
+            $binariosImage = file_get_contents($_FILES['foto']['tmp_name']);
+
+            // Conexión PDO
+            $conexion = DB::conn();
+            $sentencia = $conexion->prepare("
+                UPDATE noticias 
+                SET nombre = :nombre, imagen = :imagen, tipo = :tipo 
+                WHERE titulo = :titulo
+            ");
+
+            $sentencia->bindParam(':nombre', $nombreArchivo);
+            $sentencia->bindParam(':imagen', $binariosImage, PDO::PARAM_LOB); // LOB para binarios
+            $sentencia->bindParam(':tipo', $tipoArchivo);
+            $sentencia->bindParam(':titulo', $titulo);
+
+            $resultado = $sentencia->execute();
+
+            if ($resultado) {
+                return true;
+            } else {
+                return 'Error al actualizar la imagen.';
+            }
+
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($conexion !== null) {
+                $conexion = null;
+            }
         }
     }
 
@@ -503,8 +493,8 @@ class SQL {
                         return 'Ya tienes cita para la fecha '.$resultado[0]-> fecha_cita;
         
                     }else {
-                        // Enviar los datos a insertarCita() para su inserción en la base de datos.
-                        SQL::insertarCita($idUsuario, $fechaCita, $motivoCita);
+                        // Enviar los datos para su inserción en la base de datos.
+                        return [$idUsuario, $fechaCita, $motivoCita];
                     }
 
                 }else {
@@ -513,7 +503,8 @@ class SQL {
                 }
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarInsertCita()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -531,9 +522,9 @@ class SQL {
                 $idUser = $userCitaAdmin;
                 $resultado = SQL::comprobarIdUser($idUser);
 
-                if(count($resultado)>0) {
+                if ($resultado !== null) {
 
-                    $idUsuario = $resultado[0]-> idUser;
+                    $idUsuario = $resultado->idUser;
 
                     $milisegundos = round(microtime(true) * 1000); // obtener la 'fecha actual' en milisegundos.
                     $milisegundosCita = strtotime($_POST['fechaCitaAdmin']) * 1000; // obtener la 'fechaCita' en milisegundos.
@@ -562,8 +553,8 @@ class SQL {
                             return 'Ya tienes cita para la fecha '.$resultado[0]-> fecha_cita;
             
                         }else {
-                            // Enviar los datos a insertarCita() para su inserción en la base de datos.
-                            SQL::insertarCita($idUsuario, $fechaCita, $motivoCita);
+                            // Enviar los datos para su inserción en la base de datos.
+                            return [$idUsuario, $fechaCita, $motivoCita];
                         }
 
                     }else {
@@ -576,14 +567,15 @@ class SQL {
                 }
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarInsertCitaAdmin()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
     /*
         Recoger datos del formulario (actualizarCita.php) o (modificarCitaAdmin.php).
     */
-    public static function ValidarActualizarCita() {
+    public static function validarActualizarCita() {
         try {
             // Comprobar fecha de la Cita.
             if (empty($_POST['nuevaFechaCita'])) {
@@ -601,7 +593,6 @@ class SQL {
 
                     // Compruebo si el motivo de la cita esta vacio.
                     if (!isset($_POST['textActualizarCita'])) {
-                        
                         // Si el motivo esta vacio.
                         $textActualizarCita = null;
                     }
@@ -612,24 +603,23 @@ class SQL {
 
                     // Obtengo el 'id' de la 'cita' para actualizar.
                     $idCita = $_POST['actualizarCitaId'];
-
-                    // Obtengo el 'idUser' del 'usuario' de 'modificarCita.php' o 'modificarCitaAdmin.php'.
-                    $idUsuario = $_SESSION['identUser'];
+                    
+                    // Obtener el idUser dueño de la cita
+                    $idUsuario = SQL::obtenerIdUsuarioDeCita($idCita);
+                    if (!$idUsuario) {
+                        return 'No se pudo verificar el usuario dueño de la cita';
+                    }
 
                     // Compruebo si la 'fecha' de la 'cita' ya exite en la tabla 'citas'.
                     $resultado = SQL::comprobarFechaCita($idUsuario, $nuevaFechaCita);
 
-                    // Si no existe. Enviar los datos a modificarCita() para actualizarlos en la tabla 'citas'.
-                    if (count($resultado)<1) {
-                        SQL::modificarCita($idCita, $nuevaFechaCita, $textActualizarCita);
-
-                    }elseif (count($resultado)>0 && $resultado[0]-> fecha_cita !== $_POST['fechaActualizarCita']) {
-                        // Si existe y es distinta a la seleccionada.
+                    if (count($resultado)>0 && $resultado[0]-> fecha_cita !== $_POST['fechaActualizarCita']) {
+                        // Si existe la fecha y es distinta a la seleccionada.
                         return 'Ya tienes cita para la fecha '.$resultado[0]-> fecha_cita;
-                        
-                    }else {
-                        // Si existe y es igual a la seleccionada. Enviar los datos a modificarMotivoCita() para actualizarlos en la tabla 'citas'.
-                        SQL::modificarMotivoCita($idCita, $textActualizarCita);
+                    }
+                    else {
+                        // Enviar los datos a insertarCita() para su inserción en la base de datos.
+                        return [$idCita, $nuevaFechaCita, $textActualizarCita];
                     }
 
                 }else {
@@ -638,7 +628,8 @@ class SQL {
                 }
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE ValidarActualizarCita()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -647,89 +638,66 @@ class SQL {
     */
     public static function validarModUserAdmin() {
         try {
-            // Comprobar mediante una expresión regular, el 'email' recibido.
-            $expresionEmail = "/\w+@\w+\.+[a-z]/";
-        
-            // Comprobar mediante una expresión regular, el 'telefono' recibido.
-            $expresionTelf = "/^([0-9]{9})$/";
-        
-            /* Comprobar que los campos obligatorios contienen datos y que no superen la longitud de caracteres especificada. */
-            if (empty($_POST['nombre']) || empty($_POST['apellidos']) || empty($_POST['newEmail']) || 
-                empty($_POST['telefono']) || empty($_POST['birthday']) || empty($_POST['newUserAdmin']) || 
-               empty($_POST['rol'])) {
-                
-                return 'los campos marcados ( * ) son obligatorios';
-        
-            }elseif (strlen($_POST['nombre'])>30) {
-                return 'el nombre: no debe superar 30 caracteres';
-            }
-            elseif (strlen($_POST['apellidos'])>60) {
-                return 'los apellidos: no deben superar 60 caracteres';
-            }
-            elseif(!preg_match($expresionEmail, $_POST['email'])) {
-                return 'el email no es valido';
-            }
-            elseif (strlen($_POST['email'])>100) {
-                return 'el email: no debe superar 100 caracteres';
-            }
-            elseif (!preg_match($expresionTelf, $_POST['telefono'])) {
-                return 'el telefono: debe ser de 9 caracteres numericos';      
+            $expresionTelefono = "/^\d{9}$/";
 
-            }elseif (strlen($_POST['direccion'])>100) {
-                return 'la direccion: no debe superar 100 caracteres';
-            }
-            elseif (strlen($_POST['usuario'])>50) {
-                return 'la direccion: no debe superar 100 caracteres';
-            }
-            else {
-                // Compruebo si la fecha es mayor que la actual.
-                $milisegundos = round(microtime(true) * 1000); // obtener la 'fecha actual' en milisegundos.
-                $milisegundosCita = strtotime($_POST['birthday']) * 1000; // obtener la 'birthday' en milisegundos.
-
-                if ($milisegundosCita > $milisegundos) {
-                    return 'la fecha: no puede ser posterior a la actual';
-                }
-                else {
-                    // Compruebo el 'rol'.
-                    if ($_POST['rol'] === 'user' || $_POST['rol'] === 'admin') {
-
-                        // Comprueba si existe 'EMAIL' en la base de datos.
-                        $email = $_POST['newEmail'];
-                        $resultado = SQL::comprobarEmail($email);
-                        if (count($resultado)>0 && $resultado[0]-> email !== $_POST['email']) {
-                            return 'el email "'.$email.'" ya existe';
-                        }
-                        else {
-                            // Comprueba si existe 'USUARIO' en la base de datos.
-                            $usuario = $_POST['newUserAdmin'];
-                            $resultado = SQL::comprobarUsuario($usuario);
-                            if (count($resultado)>0 && $resultado[0]-> usuario !== $_POST['usuario']) {
-                                return 'el usuario "'.$usuario.'" ya esta registrado';
-                            }
-                            else {
-                                // Introducir todos los datos recogidos en sus respectivas variables.
-                                $nombre = htmlspecialchars($_POST['nombre']);
-                                $apellidos = htmlspecialchars($_POST['apellidos']);
-                                $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-                                $telefono = htmlspecialchars($_POST['telefono']);
-                                $fecha_nacimiento = htmlspecialchars($_POST['birthday']);
-                                $direccion = htmlspecialchars($_POST['direccion']);
-                                $sexo = htmlspecialchars($_POST['cajaSexoAdmin']);
-                                $usuario = htmlspecialchars($_POST['newUserAdmin']);
-                                $rol = htmlspecialchars($_POST['rol']);
-                            
-                                // Enviar los datos a modificarUserAdmin() para su modificación y actualización en la base de datos.
-                                SQL::modificarUserAdmin($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $rol);
-                            }
-                        }
-                    }
-                    else {
-                        return 'el rol: debe ser "user" o "admin"';
-                    }
+            // Campos obligatorios
+            $camposObligatorios = ['nombre', 'apellidos', 'email', 'newEmail', 'telefono', 'birthday', 'newUserAdmin', 'rol'];
+            foreach ($camposObligatorios as $campo) {
+                if (empty($_POST[$campo])) {
+                    return 'Los campos marcados ( * ) son obligatorios';
                 }
             }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE validarRegistroAdmin()" . $e->getMessage();
+
+            // Longitudes y validaciones individuales
+            if (strlen($_POST['nombre']) > 30) return 'El nombre no debe superar 30 caracteres';
+            if (strlen($_POST['apellidos']) > 60) return 'Los apellidos no deben superar 60 caracteres';
+            if (strlen($_POST['newEmail']) > 100) return 'El email no debe superar 100 caracteres';
+            if (!filter_var($_POST['newEmail'], FILTER_VALIDATE_EMAIL)) return 'El email no es válido';
+            if (!preg_match($expresionTelefono, $_POST['telefono'])) return 'El teléfono debe ser de 9 dígitos numéricos';
+            if (strlen($_POST['direccion'] ?? '') > 100) return 'La dirección no debe superar 100 caracteres';
+            if (strlen($_POST['newUserAdmin']) > 50) return 'El usuario no debe superar 50 caracteres';
+
+            // Validar fecha
+            $fechaNacimiento = strtotime($_POST['birthday']);
+            if ($fechaNacimiento === false || $fechaNacimiento > time()) {
+                return 'La fecha no puede ser mayor a la actual';
+            }
+
+            // Rol válido
+            $rol = $_POST['rol'];
+            if (!in_array($rol, ['user', 'admin'])) return 'El rol debe ser "user" o "admin"';
+
+            // Comprobar email único (solo si cambia)
+            $emailNuevo = $_POST['newEmail'];
+            $emailAntiguo = $_POST['email'];
+            $resultado = SQL::comprobarEmail($emailNuevo);
+            if ($resultado !== false && count($resultado) > 0 && $resultado[0]->email !== $emailAntiguo) {
+                return 'El email "' . $emailNuevo . '" ya está registrado';
+            }
+
+            // Comprobar usuario único (solo si cambia)
+            $usuarioNuevo = $_POST['newUserAdmin'];
+            $usuarioAntiguo = $_POST['usuario'];
+            $resultado = SQL::comprobarUsuario($usuarioNuevo);
+            if ($resultado !== false && count($resultado) > 0 && $resultado[0]->usuario !== $usuarioAntiguo) {
+                return 'El usuario "' . $usuarioNuevo . '" ya está registrado';
+            }
+
+            // Sanitizar datos para retorno
+            $nombre = htmlspecialchars($_POST['nombre']);
+            $apellidos = htmlspecialchars($_POST['apellidos']);
+            $email = filter_input(INPUT_POST, 'newEmail', FILTER_SANITIZE_EMAIL);
+            $telefono = htmlspecialchars($_POST['telefono']);
+            $fecha_nacimiento = date('Y-m-d', $fechaNacimiento);
+            $direccion = !empty($_POST['direccion']) ? htmlspecialchars($_POST['direccion']) : null;
+            $sexo = !empty($_POST['cajaSexoAdmin']) ? htmlspecialchars($_POST['cajaSexoAdmin']) : null;
+            $usuario = htmlspecialchars($_POST['newUserAdmin']);
+
+            return [$nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $rol];
+
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -739,20 +707,21 @@ class SQL {
     * @return array.
     */
     public static function comprobarEmail($email) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
             $sentencia = "SELECT * FROM users_data WHERE email = :email";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":email" => $email));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $consulta->execute([":email" => $email]);
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ);
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarEmail()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) $consulta->closeCursor();
+            $conexion = null; // cierra conexión explícitamente
         }
     }
 
@@ -762,20 +731,21 @@ class SQL {
     * @return array.
     */
     public static function comprobarUsuario($usuario) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
             $sentencia = "SELECT * FROM users_login WHERE usuario = :usuario";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":usuario" => $usuario));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $consulta->execute([":usuario" => $usuario]);
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ);
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarUsuario()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) $consulta->closeCursor();
+            $conexion = null; // cierra conexión explícitamente
         }
     }
 
@@ -785,20 +755,21 @@ class SQL {
     * @return array.
     */
     public static function comprobarIdUser($idUser) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
             $sentencia = "SELECT * FROM users_login WHERE idUser = :idUser";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":idUser" => $idUser));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
+            $consulta->execute([":idUser" => $idUser]);
+            $usuario = $consulta->fetch(PDO::FETCH_OBJ); // fetch único
+            return $usuario ?: null; // Devuelve el objeto o null si no se encontró
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) $consulta->closeCursor();
             $conexion = null;
-            return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarIdUser()" . $e->getMessage();
         }
     }
 
@@ -823,21 +794,25 @@ class SQL {
                     $_SESSION['usuario'] = $result[0]->usuario;
                     $_SESSION['rol'] = $result[0]->rol;
                     $_SESSION['idUser'] = $result[0]->idUser;
-
+            
                     // Redireccionar al 'usuario' a la página 'index.php'.
                     header("location:../index.php?msgConfirm=okk");
+                    exit();
                 }
                 else {
                     // Si no es correcta. Redireccionar al 'usuario' a la página 'login.php'.
                     header('location:login.php?msgError=la contraseña no es correcta');
+                    exit();
                 }
             }
             else {
                 // Si no existe. Redireccionar al 'usuario' a la página 'login.php'.
                 header('location:login.php?msgError=el usuario ( '.$usuarioLogin.' ) no existe');
+                exit();
             }
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarLogin()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -847,20 +822,19 @@ class SQL {
     * @return array.
     */
     public static function comprobarTituloNoticiaAdmin($titulo) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT * FROM noticias WHERE titulo = :titulo";
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":titulo" => $titulo));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
+            $consulta = $conexion->prepare("SELECT * FROM noticias WHERE titulo = :titulo");
+            $consulta->execute([':titulo' => $titulo]);
+            return $consulta->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta !== null) $consulta->closeCursor();
             $conexion = null;
-            return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarTituloNoticiaAdmin()" . $e->getMessage();
         }
     }
 
@@ -870,20 +844,25 @@ class SQL {
     * @return array. 
     */
     public static function comprobarFechaCita($idUsuario, $fechaCita) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
             $sentencia = "SELECT * FROM citas WHERE idUser = :idUser AND fecha_cita = :fecha_cita";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":idUser" => $idUsuario, ":fecha_cita" => $fechaCita));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $consulta->execute([
+                ":idUser" => $idUsuario,
+                ":fecha_cita" => $fechaCita
+            ]);
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ);
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarFechaCita()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+
+        } finally {
+            if ($consulta) $consulta->closeCursor();
+            $conexion = null;
         }
     }
 
@@ -906,7 +885,8 @@ class SQL {
             $conexion = null;
             return $result;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE comprobarSiHayCitas()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -929,7 +909,8 @@ class SQL {
             $conexion = null;
             return $result;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerDatosPersonales()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -938,21 +919,25 @@ class SQL {
     * @return array.
     */
     public static function obtenerUsersAdmin() {
+        $conexion = null;
+        $stmt = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT ud.idUser,ud.nombre,ud.apellidos,ud.email,ud.telefono,ud.fecha_nacimiento,
-            ud.direccion,ud.sexo,ul.usuario,ul.rol FROM users_data ud,users_login ul WHERE (ud.idUser = ul.idUser)";
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->execute();
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
+            $sentencia = "
+                SELECT ud.idUser, ud.nombre, ud.apellidos, ud.email, ud.telefono, ud.fecha_nacimiento,
+                    ud.direccion, ud.sexo, ul.usuario, ul.rol
+                FROM users_data ud
+                JOIN users_login ul ON ud.idUser = ul.idUser
+            ";
+            $stmt = $conexion->prepare($sentencia);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($stmt) $stmt->closeCursor();
             $conexion = null;
-            return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerUsersAdmin()" . $e->getMessage();
         }
     }
 
@@ -961,20 +946,24 @@ class SQL {
     * @return array.
     */
     public static function obtenerIdUsersAdmin() {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT idUser FROM users_data";
-            $consulta = $conexion->prepare($sentencia);
+            $consulta = $conexion->prepare("SELECT idUser FROM users_data");
             $consulta->execute();
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-            array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ); // traer todos los resultados de golpe
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerUsersAdmin()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta !== null) {
+                $consulta->closeCursor();
+            }
+            if ($conexion !== null) {
+                $conexion = null; // cerrar conexión
+            }
         }
     }
 
@@ -983,23 +972,29 @@ class SQL {
     * @return array.
     */
     public static function obtenerUsuarioAdmin($userAdmin) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT ud.idUser,ud.nombre,ud.apellidos,ud.email,ud.telefono,ud.fecha_nacimiento,
-            ud.direccion,ud.sexo,ul.usuario,ul.rol FROM users_data ud,users_login ul WHERE (ud.idUser = :idUserdata AND ul.idUser = :idUserlogin)";
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->bindParam(":idUserdata", $userAdmin);
-            $consulta->bindParam(":idUserlogin", $userAdmin);
-            $consulta->execute();
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $sql = "
+                SELECT 
+                    ud.idUser, ud.nombre, ud.apellidos, ud.email, ud.telefono, 
+                    ud.fecha_nacimiento, ud.direccion, ud.sexo,
+                    ul.usuario, ul.rol
+                FROM users_data ud
+                JOIN users_login ul ON ud.idUser = ul.idUser
+                WHERE ud.idUser = :idUser
+            ";
+            $consulta = $conexion->prepare($sql);
+            $consulta->execute([':idUser' => $userAdmin]);
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ);
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerUsersAdmin()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta !== null) {$consulta->closeCursor();}
+            if ($conexion !== null) {$conexion = null;} // cerrar conexión
         }
     }
 
@@ -1008,20 +1003,20 @@ class SQL {
     * @return array.
     */
     public static function obtenerNoticiasAdmin() {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT * FROM noticias";
-            $consulta = $conexion->prepare($sentencia);
+            $consulta = $conexion->prepare("SELECT * FROM noticias");
             $consulta->execute();
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ);
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerNoticiasAdmin()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta !== null) {$consulta->closeCursor();}
+            if ($conexion !== null) {$conexion = null;} // cerrar conexión
         }
     }
 
@@ -1043,7 +1038,8 @@ class SQL {
             $conexion = null;
             return $result;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerEscritorNoticia()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }    
     }
 
@@ -1052,20 +1048,24 @@ class SQL {
     * @return array.
     */
     public static function obtenerNoticia($recogerTitulo) {
+        $conexion = null;
+        $consulta = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT * FROM noticias WHERE titulo = :titulo";
-            $consulta = $conexion->prepare($sentencia);
+            $consulta = $conexion->prepare("SELECT * FROM noticias WHERE titulo = :titulo");
             $consulta->execute(array(":titulo" => $recogerTitulo));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ);
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerNoticia()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta !== null) {
+                $consulta->closeCursor();
+            }
+            if ($conexion !== null) {
+                $conexion = null;
+            }
         }
     }
 
@@ -1087,7 +1087,8 @@ class SQL {
             $conexion = null;
             return $result;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerCitas()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -1096,20 +1097,20 @@ class SQL {
     * @return array.
     */
     public static function obtenerCitasAdmin() {
+        $conexion = null;
+        $consulta = null;
         try {
-        $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT * FROM citas";
-            $consulta = $conexion->prepare($sentencia);
+            $consulta = $conexion->prepare("SELECT * FROM citas");
             $consulta->execute();
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
+            $result = $consulta->fetchAll(PDO::FETCH_OBJ); // obtén todos los resultados directamente
             return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerCitasAdmin()" . $e->getMessage();
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta !== null) {$consulta->closeCursor();}
+            if ($conexion !== null) {$conexion = null;}
         }
     }
 
@@ -1118,20 +1119,19 @@ class SQL {
     * @return array.
     */
     public static function obteneridUsersCitas() {
+        $conexion = null;
+        $stmt = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT idUser FROM citas";
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->execute();
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-            array_push($result, $fila);
-            }
-            $consulta->closeCursor();
-            $conexion = null;
-            return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obteneridUsersCitas()" . $e->getMessage();
+            $stmt = $conexion->prepare("SELECT idUser FROM citas");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($stmt) $stmt->closeCursor();
+            $conexion = null; // libera la conexión
         }
     }
 
@@ -1140,23 +1140,47 @@ class SQL {
     * @return array.
     */
     public static function obtenerFechasCita($idUsuario, $mostrarCitas) {
+        $conexion = null;
+        $stmt = null;
         try {
-            $result = [];
             $conexion = DB::conn();
-            $sentencia = "SELECT * FROM citas WHERE idUser = :idUser AND fecha_cita = :fecha_cita";
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":idUser" => $idUsuario, ":fecha_cita" => $mostrarCitas));
-            while ($fila = $consulta->fetch(PDO::FETCH_OBJ)) {
-                array_push($result, $fila);
-            }
-            $consulta->closeCursor();
+            $stmt = $conexion->prepare("
+                SELECT * FROM citas 
+                WHERE idUser = :idUser AND fecha_cita = :fecha_cita
+            ");
+            $stmt->execute([
+                ":idUser" => $idUsuario,
+                ":fecha_cita" => $mostrarCitas
+            ]);
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($stmt) {$stmt->closeCursor();}
             $conexion = null;
-            return $result;
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE obtenerFechasCita()" . $e->getMessage();
         }
     }
-    
+
+    /*
+        Obtener el idUser real dueño de la cita que se está modificando.
+    */
+    public static function obtenerIdUsuarioDeCita($idCita) {
+        try {
+            $conexion = DB::conn();
+            $consulta = $conexion->prepare("SELECT idUser FROM citas WHERE idCita = :idCita");
+            $consulta->execute([':idCita' => $idCita]);
+            $resultado = $consulta->fetch(PDO::FETCH_OBJ);
+            return $resultado ? $resultado->idUser : null;
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Error al obtener el usuario de la cita.</p>";
+            return null;
+        } finally {
+            if ($consulta) $consulta->closeCursor();
+            $conexion = null;
+        }
+    }
+
     /*
         Inserta un registro en la tabla 'users_data' y 'users_login'.
     */
@@ -1185,7 +1209,7 @@ class SQL {
             $conexion = DB::conn(); // abrir conexión.
             $coste = ['cost' => 10]; // 'coste' de la encriptación.
             $pass = password_hash($password, PASSWORD_BCRYPT, $coste); // encriptar password.
-            $rol = "admin"; // para que predeterminadamente todos se registren con el 'rol = user'.
+            $rol = "user"; // para que predeterminadamente todos se registren con el 'rol = user'.
             // $rol = "admin"; // este 'rol' es para la primera inserción de la tabla, que será la mia con el 'rol = admin'.
             $sentencia = 'INSERT INTO users_login (idUser, usuario, password, rol)
             VALUES (:idUser, :usuario, :password, :rol)';
@@ -1202,7 +1226,8 @@ class SQL {
             /**  Redireccionar al 'usuario' a la página 'login.php' **/
             header('location:./login.php?msgConfirm=Registro realizado, puedes iniciar sesión');
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE insertarUsuario()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
         }
     }
 
@@ -1210,46 +1235,58 @@ class SQL {
         Inserta un registro en la tabla 'users_data' y 'users_login', desde 'insertarUserAdmin.php'(usuarios_administración.php).
     */
     public static function insertarUserAdmin($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $password, $rol) {
+        $conexion = null;
+        $stmt1 = null;
+        $stmt2 = null;
         try {
-            /** Insertar en la tabla 'users_data' **/
-            $conexion = DB::conn(); // abrir conexión.
-            $sentencia = 'INSERT INTO users_data (nombre, apellidos, email, telefono, fecha_nacimiento, direccion, sexo)
-            VALUES (:nombre, :apellidos, :email, :telefono, :fecha_nacimiento, :direccion, :sexo)';
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->bindParam(":nombre", $nombre);
-            $consulta->bindParam(":apellidos", $apellidos);
-            $consulta->bindParam(":email", $email);
-            $consulta->bindParam(":telefono", $telefono);
-            $consulta->bindParam(":fecha_nacimiento", $fecha_nacimiento);
-            $consulta->bindParam(":direccion", $direccion);
-            $consulta->bindParam(":sexo", $sexo);
-            $consulta->execute();
-            // Obtengo el 'id' de la última inserción de (users_data) para que corresponda al mismo 'id' de 'idUser' en (users_login).
+            $conexion = DB::conn();
+            $conexion->beginTransaction(); // Iniciar transacción
+
+            // Insertar en users_data
+            $sentencia1 = 'INSERT INTO users_data (nombre, apellidos, email, telefono, fecha_nacimiento, direccion, sexo)
+                        VALUES (:nombre, :apellidos, :email, :telefono, :fecha_nacimiento, :direccion, :sexo)';
+            $stmt1 = $conexion->prepare($sentencia1);
+            $stmt1->execute([
+                ':nombre' => $nombre,
+                ':apellidos' => $apellidos,
+                ':email' => $email,
+                ':telefono' => $telefono,
+                ':fecha_nacimiento' => $fecha_nacimiento,
+                ':direccion' => $direccion,
+                ':sexo' => $sexo
+            ]);
+
             $ultimo_id = $conexion->lastInsertId();
-            // Liberar la conexión al servidor y poner la conexión a 'null'.
-            $consulta->closeCursor();
-            $conexion = null;
 
-            /** Insertar en la tabla 'users_login' **/
-            $conexion = DB::conn(); // abrir conexión.
-            $coste = ['cost' => 10]; // 'coste' de la encriptación.
-            $pass = password_hash($password, PASSWORD_BCRYPT, $coste); // encriptar password.
-            $sentencia = 'INSERT INTO users_login (idUser, usuario, password, rol)
-            VALUES (:idUser, :usuario, :password, :rol)';
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->bindParam(":idUser", $ultimo_id);
-            $consulta->bindParam(":usuario", $usuario);
-            $consulta->bindParam(":password", $pass);
-            $consulta->bindParam(":rol", $rol);
-            $consulta->execute();
-            // Liberar la conexión al servidor y poner la conexión a 'null'.
-            $consulta->closeCursor();
-            $conexion = null;
+            // Insertar en users_login
+            $coste = ['cost' => 10];
+            $pass = password_hash($password, PASSWORD_BCRYPT, $coste);
 
-            /**  Redireccionar al 'usuario' a la página 'usuarios_administracion.php'. **/
-            header('location:usuarios_administracion.php?msgConfirm=Registro Realizado&tareaAdmin=verUsersAdmin');
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE insertarUserAdmin()" . $e->getMessage();
+            $sentencia2 = 'INSERT INTO users_login (idUser, usuario, password, rol)
+                        VALUES (:idUser, :usuario, :password, :rol)';
+            $stmt2 = $conexion->prepare($sentencia2);
+            $stmt2->execute([
+                ':idUser' => $ultimo_id,
+                ':usuario' => $usuario,
+                ':password' => $pass,
+                ':rol' => $rol
+            ]);
+
+            $conexion->commit(); // Confirmar transacción
+
+            return true;
+
+        } catch (Exception $e) {
+            if ($conexion) {
+                $conexion->rollBack(); // Deshacer si hay error
+            }
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+
+        } finally {
+            if ($stmt1) $stmt1->closeCursor();
+            if ($stmt2) $stmt2->closeCursor();
+            $conexion = null;
         }
     }
 
@@ -1257,26 +1294,25 @@ class SQL {
         Inserta un registro en la tabla 'citas'.
     */
     public static function insertarCita($idUsuario, $fechaCita, $motivoCita) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
-            $sentencia = 'INSERT INTO citas (idUser, fecha_cita, motivo_cita)
-            VALUES (:idUser, :fecha_cita, :motivo_cita)';
+            $sentencia = "INSERT INTO citas (idUser, fecha_cita, motivo_cita)
+                        VALUES (:idUser, :fecha_cita, :motivo_cita)";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->bindParam(":idUser", $idUsuario);
-            $consulta->bindParam(":fecha_cita", $fechaCita);
-            $consulta->bindParam(":motivo_cita", $motivoCita);
-            $consulta->execute();
-            $consulta->closeCursor();
+            $consulta->execute([
+                ":idUser" => $idUsuario,
+                ":fecha_cita" => $fechaCita,
+                ":motivo_cita" => $motivoCita
+            ]);
+            return true;
+        } catch (Exception $e) {
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) $consulta->closeCursor();
             $conexion = null;
-            if($_SESSION['idUserGo'] === 1) {
-                /**  Redireccionar al 'usuario' a la página 'citas_administracion.php'. **/
-                header('location:citas_administracion.php?msgConfirm=Cita Agregada&tareaAdmin=verCitasAdmin');
-            }else {
-                /**  Redireccionar al 'usuario' a la página 'citaciones.php' **/
-                header('location:citaciones.php?msgConfirm=Cita Agregada&tarea=verCitas');
-            }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE insertarCita()" . $e->getMessage();
         }
     }
 
@@ -1284,45 +1320,56 @@ class SQL {
         Modifica y actualiza un registro en las tablas 'users_data' y 'users_login' (del 'usuario' de la sesión actual, por medio de su perfil).
     */
     public static function modificarPerfil($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $password) {
+        $conexion = null;
+        $stmt1 = null;
+        $stmt2 = null;
         try {
-            // Obtener el 'idUser' del 'usuario', para actualizar los datos en las dos tablas donde el 'idUser' coincida.
             $idUsuario = $_SESSION['idUser'];
+            if (!$idUsuario) return false;
 
-            if($idUsuario) {
-                /** Actualizar los datos personales en la tabla users_data **/
-                $conexion = DB::conn(); // abrir conexión.
-                $sentencia = "UPDATE users_data SET nombre = :nombre, apellidos = :apellidos, email = :email, telefono = :telefono, 
-                fecha_nacimiento = :fecha_nacimiento, direccion = :direccion, sexo = :sexo WHERE idUser = :idUser";
-                $consulta = $conexion->prepare($sentencia);
-                $consulta->bindParam(":nombre", $nombre);
-                $consulta->bindParam(":apellidos", $apellidos);
-                $consulta->bindParam(":email", $email);
-                $consulta->bindParam(":telefono", $telefono);
-                $consulta->bindParam(":fecha_nacimiento", $fecha_nacimiento);
-                $consulta->bindParam(":direccion", $direccion);
-                $consulta->bindParam(":sexo", $sexo);
-                $consulta->bindParam(":idUser", $idUsuario);
-                $consulta->execute();
-                // Liberar la conexión al servidor y poner la conexión a 'null'.
-                $consulta->closeCursor();
-                $conexion = null;
+            $conexion = DB::conn();
+            $conexion->beginTransaction(); // 🔐
 
-                /** Actualizar la contraseña en la tabla users_login **/
-                $conexion = DB::conn(); // abrir conexión.
-                $sentencia = "UPDATE users_login SET password = :password WHERE idUser = :idUser";
-                $consulta = $conexion->prepare($sentencia);
-                $consulta->bindParam(":password", $password);
-                $consulta->bindParam(":idUser", $idUsuario);
-                $consulta->execute();
-                // Liberar la conexión al servidor y poner la conexión a 'null'.
-                $consulta->closeCursor();
-                $conexion = null;
-        
-                /**  Redireccionar al 'usuario' a la página 'perfil.php' **/
-                header('location:perfil.php?msgConfirm=Registro Actualizado');
-            }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE modificarPerfil()" . $e->getMessage();
+            // 1. users_data
+            $stmt1 = $conexion->prepare("
+                UPDATE users_data SET 
+                    nombre = :nombre, apellidos = :apellidos, email = :email, telefono = :telefono, 
+                    fecha_nacimiento = :fecha_nacimiento, direccion = :direccion, sexo = :sexo 
+                WHERE idUser = :idUser
+            ");
+            $stmt1->execute([
+                ":nombre" => $nombre,
+                ":apellidos" => $apellidos,
+                ":email" => $email,
+                ":telefono" => $telefono,
+                ":fecha_nacimiento" => $fecha_nacimiento,
+                ":direccion" => $direccion,
+                ":sexo" => $sexo,
+                ":idUser" => $idUsuario
+            ]);
+
+            // 2. users_login
+            $stmt2 = $conexion->prepare("
+                UPDATE users_login SET password = :password WHERE idUser = :idUser
+            ");
+            $stmt2->execute([
+                ":password" => $password,
+                ":idUser" => $idUsuario
+            ]);
+
+            $conexion->commit(); // ✅
+            header('location:perfil.php?msgConfirm=Registro Actualizado');
+            exit;
+
+        } catch (Exception $e) {
+            if ($conexion) $conexion->rollBack(); // ❌
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+
+        } finally {
+            if ($stmt1) $stmt1->closeCursor();
+            if ($stmt2) $stmt2->closeCursor();
+            $conexion = null;
         }
     }
 
@@ -1330,46 +1377,62 @@ class SQL {
         Modifica y actualiza un registro en las tablas 'users_data' y 'users_login'.
     */
     public static function modificarUserAdmin($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $rol) {
-        try{
-            // Obtener el 'idUser' del 'usuario', para actualizar los datos en las dos tablas donde el 'idUser' coincida.
+        $conexion = null;
+        $stmt1 = null;
+        $stmt2 = null;
+        try {
             $idUserAdmin = $_SESSION['identUserAdmin'];
-
-            if($idUserAdmin) {
-                /** Actualizar los datos personales en la tabla users_data **/
-                $conexion = DB::conn(); // abrir conexión.
-                $sentencia = "UPDATE users_data SET nombre = :nombre, apellidos = :apellidos, email = :email, telefono = :telefono, 
-                fecha_nacimiento = :fecha_nacimiento, direccion = :direccion, sexo = :sexo WHERE idUser = :idUser";
-                $consulta = $conexion->prepare($sentencia);
-                $consulta->bindParam(":nombre", $nombre);
-                $consulta->bindParam(":apellidos", $apellidos);
-                $consulta->bindParam(":email", $email);
-                $consulta->bindParam(":telefono", $telefono);
-                $consulta->bindParam(":fecha_nacimiento", $fecha_nacimiento);
-                $consulta->bindParam(":direccion", $direccion);
-                $consulta->bindParam(":sexo", $sexo);
-                $consulta->bindParam(":idUser", $idUserAdmin);
-                $consulta->execute();
-                // Liberar la conexión al servidor y poner la conexión a 'null'.
-                $consulta->closeCursor();
-                $conexion = null;
-
-                /** Actualizar el 'usuario y rol' en la tabla users_login **/
-                $conexion = DB::conn(); // abrir conexión.
-                $sentencia = "UPDATE users_login SET usuario = :usuario, rol = :rol WHERE idUser = :idUser";
-                $consulta = $conexion->prepare($sentencia);
-                $consulta->bindParam(":usuario", $usuario);
-                $consulta->bindParam(":rol", $rol);
-                $consulta->bindParam(":idUser", $idUserAdmin);
-                $consulta->execute();
-                // Liberar la conexión al servidor y poner la conexión a 'null'.
-                $consulta->closeCursor();
-                $conexion = null;
-        
-                /**  Redireccionar al 'usuario' a la página 'usuarios_administracion.php'. **/
-                header('location:usuarios_administracion.php?msgConfirm=Registro Actualizado&tareaAdmin=verUsersAdmin');
+            if (!$idUserAdmin) {
+                return false;
             }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE modificarUserAdmin()" . $e->getMessage();
+            $conexion = DB::conn();
+            $conexion->beginTransaction(); // 🔐 transacción
+            // Actualizar users_data
+            $stmt1 = $conexion->prepare("
+                UPDATE users_data SET 
+                    nombre = :nombre,
+                    apellidos = :apellidos,
+                    email = :email,
+                    telefono = :telefono,
+                    fecha_nacimiento = :fecha_nacimiento,
+                    direccion = :direccion,
+                    sexo = :sexo 
+                WHERE idUser = :idUser
+            ");
+            $stmt1->execute([
+                ':nombre' => $nombre,
+                ':apellidos' => $apellidos,
+                ':email' => $email,
+                ':telefono' => $telefono,
+                ':fecha_nacimiento' => $fecha_nacimiento,
+                ':direccion' => $direccion,
+                ':sexo' => $sexo,
+                ':idUser' => $idUserAdmin
+            ]);
+            // Actualizar users_login
+            $stmt2 = $conexion->prepare("
+                UPDATE users_login SET 
+                    usuario = :usuario, 
+                    rol = :rol 
+                WHERE idUser = :idUser
+            ");
+            $stmt2->execute([
+                ':usuario' => $usuario,
+                ':rol' => $rol,
+                ':idUser' => $idUserAdmin
+            ]);
+            $conexion->commit(); // ✅ confirmar transacción
+            return true;
+        } catch (Exception $e) {
+            if ($conexion) {
+                $conexion->rollBack(); // ❌ revertir cambios si hay error
+            }
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if (isset($stmt1)) $stmt1->closeCursor();
+            if (isset($stmt2)) $stmt2->closeCursor();
+            $conexion = null;
         }
     }
 
@@ -1377,6 +1440,8 @@ class SQL {
         Modifica y actualiza solo 'los datos de la noticia' en la tabla 'noticias'.
     */
     public static function modificarDatosNoticiaAdmin($idNoticia, $idUser, $titulo, $textoNoticia, $fechaNoticia) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
             $sentencia = "UPDATE noticias SET idUser = :idUser, titulo = :titulo, texto = :texto, fecha_noticia = :fecha_noticia WHERE idNoticia = :idNoticia";
@@ -1387,12 +1452,13 @@ class SQL {
             $consulta->bindParam(":texto", $textoNoticia);
             $consulta->bindParam(":fecha_noticia", $fechaNoticia);
             $consulta->execute();
-            $consulta->closeCursor();
-            $conexion = null;
-            /**  Redireccionar al 'usuario' a la página 'noticias_administracion.php'. **/
-            header('location:noticias_administracion.php?msgConfirm=Noticia Actualizada&tareaAdmin=verNoticiasAdmin');
+            return true;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE modificarDatosNoticiaAdmin()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) {$consulta->closeCursor();}
+            $conexion = null;
         }
     }
 
@@ -1400,6 +1466,8 @@ class SQL {
         Modifica y actualiza un registro en la tabla 'citas'.
     */
     public static function modificarCita($idCita, $nuevaFechaCita, $textActualizarCita) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
             $sentencia = "UPDATE citas SET fecha_cita = :fecha_cita, motivo_cita = :motivo_cita WHERE idCita = :idCita";
@@ -1408,42 +1476,15 @@ class SQL {
             $consulta->bindParam(":fecha_cita", $nuevaFechaCita);
             $consulta->bindParam(":motivo_cita", $textActualizarCita);
             $consulta->execute();
-            $consulta->closeCursor();
-            $conexion = null;
-            if($_SESSION['idUserGo'] === 1) {
-                /**  Redireccionar al 'usuario' a la página 'citas_administracion.php'. **/
-                header('location:citas_administracion.php?msgConfirm=Cita Actualizada&tareaAdmin=verCitasAdmin');
-            }else {
-                /**  Redireccionar al 'usuario' a la página 'citaciones.php' **/
-                header('location:citaciones.php?msgConfirm=Cita Actualizada&tarea=verCitas');
-            }
+            return true;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE modificarCita()" . $e->getMessage();
-        }
-    }
-
-    /*
-        Modifica y actualiza solo 'el motivo de la cita' en la tabla 'citas'.
-    */
-    public static function modificarMotivoCita($idCita, $textActualizarCita) {
-        try {
-            $conexion = DB::conn();
-            $sentencia = "UPDATE citas SET motivo_cita = :motivo_cita WHERE idCita = :idCita";
-            $consulta = $conexion->prepare($sentencia);
-            $consulta->bindParam(":idCita", $idCita);
-            $consulta->bindParam(":motivo_cita", $textActualizarCita);
-            $consulta->execute();
-            $consulta->closeCursor();
-            $conexion = null;
-            if($_SESSION['idUserGo'] === 1) {
-                /**  Redireccionar al 'usuario' a la página 'citas_administracion.php'. **/
-                header('location:citas_administracion.php?msgConfirm=Cita Actualizada&tareaAdmin=verCitasAdmin');
-            }else {
-                /**  Redireccionar al 'usuario' a la página 'citaciones.php' **/
-                header('location:citaciones.php?msgConfirm=Cita Actualizada&tarea=verCitas');
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) {
+                $consulta->closeCursor(); // 🧹 cerrar cursor siempre, si fue creado
             }
-        }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE modificarMotivoCita()" . $e->getMessage();
+            $conexion = null; // 🧹 liberar conexión
         }
     }
 
@@ -1451,17 +1492,20 @@ class SQL {
         Elimina un registro en la tabla 'noticias' desde el rol 'admin'.
     */
     public static function eliminarNoticiaAdmin($recogerDato) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
             $sentencia = "DELETE FROM noticias WHERE titulo = :titulo";
             $consulta = $conexion->prepare($sentencia);
             $consulta->execute(array(":titulo" => $recogerDato));
-            $consulta->closeCursor();
-            $conexion = null;
-            /** Redireccionar al 'usuario' a la página 'noticias_administracion.php'. **/
-            header('location:noticias_administracion.php?msgConfirm=Registro Eliminado&tareaAdmin=verNoticiasAdmin');
+            return true;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE eliminarNoticiaAdmin()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) {$consulta->closeCursor();}
+            $conexion = null;
         }
     }
 
@@ -1469,53 +1513,62 @@ class SQL {
         Elimina un registro en la tabla 'citas' desde el rol 'user'.
     */
     public static function eliminarCita($idUsuario, $fechaEliminacion) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
             $sentencia = "DELETE FROM citas WHERE idUser = :idUser AND fecha_cita = :fecha_cita";
             $consulta = $conexion->prepare($sentencia);
             $consulta->execute(array(":idUser" => $idUsuario, ":fecha_cita" => $fechaEliminacion));
-            $consulta->closeCursor();
-            $conexion = null;
-            /** Redireccionar al 'usuario' a la página 'citaciones.php'. **/
-            header('location:citaciones.php?msgConfirm=Cita Anulada&tarea=verCitas');
+            return true;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE eliminarCita()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) {$consulta->closeCursor();}
+            $conexion = null; // 🧹 liberar conexión
         }
     }
 
     /*
         Elimina un registro en la tabla 'citas' desde el rol 'admin'.
     */
-    public static function eliminarCitaAdmin($userCita, $recogerDato) {
+    public static function eliminarCitaAdmin($idCita) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
-            $sentencia = "DELETE FROM citas WHERE idUser = :idUser AND fecha_cita = :fecha_cita";
+            $sentencia = "DELETE FROM citas WHERE idCita = :idCita";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":idUser" => $userCita, ":fecha_cita" => $recogerDato));
-            $consulta->closeCursor();
-            $conexion = null;
-            /** Redireccionar al 'usuario' a la página 'citas_administracion.php'. **/
-            header('location:citas_administracion.php?msgConfirm=Registro Eliminado&tareaAdmin=verCitasAdmin');
+            $consulta->execute(array(":idCita" => $idCita));
+            return true;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE eliminarCitaAdmin()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) {$consulta->closeCursor();}
+            $conexion = null; // 🧹 liberar conexión
         }
     }
 
     /*
         Elimina un registro en las tablas 'users_data y users_login' desde el rol 'admin'.
     */
-    public static function eliminarUserAdmin($userAdmin) {
+    public static function eliminarUserAdmin($idUser) {
+        $conexion = null;
+        $consulta = null;
         try {
             $conexion = DB::conn();
             $sentencia = "DELETE FROM users_data WHERE idUser = :idUser";
             $consulta = $conexion->prepare($sentencia);
-            $consulta->execute(array(":idUser" => $userAdmin));
-            $consulta->closeCursor();
-            $conexion = null;
-            /** Redireccionar al 'usuario' a la página 'usuarios_administracion.php'. **/
-            header('location:usuarios_administracion.php?msgConfirm=Registro Eliminado&tareaAdmin=verUsersAdmin');
+            $consulta->execute(array(":idUser" => $idUser));
+            return true;
         }catch(Exception $e) {
-            echo "HA OCURRIDO UN ERROR EN EL PROCESO DE eliminarUserAdmin()" . $e->getMessage();
+            echo "<p style='color:red;'>Ha ocurrido un error en la operación. Por favor, inténtalo de nuevo más tarde.</p>";
+            return false;
+        } finally {
+            if ($consulta) {$consulta->closeCursor();}
+            $conexion = null; // 🧹 liberar conexión
         }
     }
 }

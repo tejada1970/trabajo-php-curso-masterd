@@ -1,13 +1,14 @@
 <?php
+    ob_start();
     session_start();
 
-    // para la barra de navegación según inicie sesión USUARIO o ADMIN.
+    // para la barra de navegación según inicie sesión USUARIO o ADMIN
     $_SESSION['header'] = null;
 
-    // para el nombre de 'usuario' y darle la 'Bienvenida' en caso de que inicie sesión.
+    // para el nombre de 'usuario' y darle la 'Bienvenida' en caso de que inicie sesión
     $_SESSION['nameUser'] = null;
 
-    // compruebo si hay 'usuario'.
+    // compruebo si hay 'usuario'
     if (!isset($_SESSION['usuario'])) {
         // si no hay 'usuario', asigno la barra de navegación para VISITANTE.
         $_SESSION['header'] = 'headerVisit';
@@ -15,8 +16,6 @@
     else {
         // si hay 'usuario', también compruebo su 'rol'.
         if (isset($_SESSION['usuario'])) {
-
-            // introduzco la 'Bienvenida'.
             if(isset($_GET['msgConfirm'])) {
                 if ($_GET['msgConfirm'] === 'okk') {
                     $_SESSION['nameUser'] = 'Bienvenid@ '.'<span class="spanBienvenida">'.$_SESSION["usuario"].'</span>'.'<br>'.' Has iniciado sesión en '.'<span class="spanBienvenida2">'.'Small Pets'.'</span>';
@@ -24,7 +23,6 @@
             }
             // compruebo el 'rol'.
             if(isset($_SESSION['rol'])){
-        
                 switch($_SESSION['rol']){
                     case 'admin':
                         // asigno la barra de navegación para ADMIN.
@@ -56,6 +54,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./assets/archivosHTML/footerHTML/footer.css">
 </head>
 <body id="bodyHiper">
     <?php
@@ -148,7 +147,6 @@
                     <?php include('./assets/archivosPHP/articulosSmallPets.php') ?>
                 </div>
             </div>
-      
         </div>
         <hr>
         <div class="section sectionPersonal" id="nosotros">
@@ -157,7 +155,7 @@
                 <div class="contenedor_texto flex wh100 pd10">
                     <div>
                         <p class="titulo wh100 pd5">Nuestro Personal</p>
-                        <p class="texto wh100 txtCenter"><br>Somos más de 300 profesionales<br>dandolo todo en cada momento, para el cuidado de tu pequeña mascota.</p>
+                        <p class="texto wh100 txtCenter"><br>Somos más de 3000 profesionales<br>dándolo todo en cada momento para el cuidado de tu mascota.</p>
                     </div>
                 </div>
                 <div class="contenedor_thumbnail flex">
@@ -169,15 +167,48 @@
             </article>
         </div>
     </main>
-    <footer>
-        <div class="paspartu">
-            <iframe src="./assets/archivosHTML/footerHTML/footer.html"></iframe>
+    <!-- footer -->
+    <footer class="footer">
+        <div class="contenedor_img">
+            <a href="#"><img src="./assets/archivosHTML/footerHTML/images/ilustracion_pajaro.png" alt="ilustracion_pajaro" width="1280" height="983"></a>
+        </div>
+        <div class="contenedor_texto">
+            <div class="titulo">
+                <span class="typed"></span>
+            </div> 
+            <div class="titulo cadenas_texto">
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Perro</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Gato</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Pez</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Conejo</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Tortuga</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Hámster</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Iguana</i></p>
+                <p>Trae a Small Pets <br> a tu <i class="mascota">Pájaro</i></p>
+            </div> 
+            <p>Pídenos <span class="color_span">información</span> sin compromiso.<br>Nuestra mejor atención, <span class="color_span">a tu alcance</span>...</p>
+            <p class="btnAvisoLegal"><a href="#">Aviso Legal</a></p>
+            <div class="socials">
+                <div>
+                    <p>Visita nuestras redes sociales</p>
+                    <a href="https://es-es.facebook.com/" target="_blank" title="enlace a facebook">
+                        <img src="./assets/archivosHTML/footerHTML/images/facebook.png" alt="facebook" width="64" height="64">
+                    </a>
+                    <a href="https://www.instagram.com/?hl=es" target="_blank" title="enlace a instagram">
+                        <img src="./assets/archivosHTML/footerHTML/images/instagram.png" alt="instagram" width="64" height="64">
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank" title="enlace a youtube">
+                        <img src="./assets/archivosHTML/footerHTML/images/youtube.png" alt="youtube" width="64" height="64">
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
-    
     <!-- scripts -->
     <script src="./scripts/scroll.js"></script>
     <script src="./scripts/burguer.js"></script>
     <script src="./scripts/avatarIndex.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="./assets/archivosHTML/footerHTML/footer.js"></script>
 </body>
 </html>

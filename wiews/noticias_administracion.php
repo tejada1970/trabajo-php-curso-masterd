@@ -1,15 +1,13 @@
 <?php
+    ob_start();
     session_start();
-
     if (!isset($_SESSION['usuario'])) {
         // redirecciono al usuario a la página login.php para VISITANTES.
         header('location: ./login.php');
     }
     else {
         if (isset($_SESSION['usuario'])) {
-        
             if(isset($_SESSION['rol'])){
-
                 if ($_SESSION['rol'] !== 'admin') {
                     // redirecciono al usuario a la página login.php para VISITANTES.
                     header('location: ./login.php');
@@ -77,51 +75,43 @@
         </div>
     </header>
     <main>
-    <div class="containerTareas tareas_flex">
+        <div class="containerTareas tareas_flex">
             <!-- aquí, introduzco el contenedor PHP según la 'tareaAdmin' a realizar -->
             <?php
-                $tareaAdmin = null;
-                if (isset($_GET['tareaAdmin'])) {
-
-                    if ($_GET['tareaAdmin'] === 'verNoticiasAdmin') {
+                $tareaAdmin = $_GET['tareaAdmin'] ?? '';
+                switch ($tareaAdmin) {
+                    case 'verNoticiasAdmin':
                         include('../assets/admin/adminNoticias/verNoticiasAdmin.php');
-                        $tareaAdmin = null;
-
-                    }elseif ($_GET['tareaAdmin'] === 'insertarNoticiasAdmin') {
+                        break;
+                    case 'insertarNoticiasAdmin':
                         $_SESSION['textNoticia'] = '';
                         $_SESSION['titulo'] = '';
                         include('../assets/admin/adminNoticias/insertarNoticiasAdmin.php');
-                        $tareaAdmin = null;
-
-                    }elseif ($_GET['tareaAdmin'] === 'modificarNoticiasAdmin') {
+                        break;
+                    case 'modificarNoticiasAdmin':
                         include('../assets/admin/adminNoticias/modificarNoticiasAdmin.php');
-                        $tareaAdmin = null;
-
-                    }elseif ($_GET['tareaAdmin'] === 'modificarImgNoticiasAdmin') {
+                        break;
+                    case 'modificarImgNoticiasAdmin':
                         include('../assets/admin/adminNoticias/modificarImgNoticiasAdmin.php');
-                        $tareaAdmin = null;
-
-                    }elseif ($_GET['tareaAdmin'] === 'deleteAdmin') {
+                        break;
+                    case 'deleteAdmin':
                         include('../assets/admin/deleteAdmin.php');
-                        $tareaAdmin = null;
-                        
-                    }else {
-                        // no hacer nada.
-                        $tareaAdmin = null;
-                    }
+                        break;
+                    default:
+                        include('../assets/admin/adminNoticias/verNoticiasAdmin.php');
+                        break;
                 }
             ?>
         </div>
     </main>
-    <footer>
-        <div class="paspartu">
-            <iframe src="../assets/archivosHTML/footerHTML/footer.html"></iframe>
-        </div>
-    </footer>
-    
+    <!-- footer -->
+    <?php include '../assets/archivosHTML/footerHTML/footer.html'; ?>
     <!-- scripts -->
     <script src="../scripts/burguer.js"></script>
     <script src="../scripts/tareasAdmin.js"></script>
     <script src="../scripts/avatar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="../assets/archivosHTML/footerHTML/footer.js"></script>
+    <link rel="stylesheet" href="../assets/archivosHTML/footerHTML/footer.css">
 </body>
 </html>

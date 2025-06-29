@@ -1,7 +1,7 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
-  $recogerTitulo = null;
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
+    $recogerTitulo = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,10 +21,24 @@
             if (isset($_GET['recogerTitulo'])) {
                 $recogerTitulo = $_GET['recogerTitulo'];
             }
-            
             // validar datos del formulario.
             if (isset($_POST['submitModNoticiaAdmin'])) {
-                $valRegistro = SQL::validarModDatosNoticiasAdmin();
+                $resultadoValidacion = SQL::validarModDatosNoticiasAdmin();
+                if (is_array($resultadoValidacion)) {
+                    // La validación fue exitosa, devuelve los datos y modifica el registro
+                    list($idNoticia, $idUser, $titulo, $textoNoticia, $fechaNoticia) = $resultadoValidacion;
+                    $returnOk = SQL::modificarDatosNoticiaAdmin($idNoticia, $idUser, $titulo, $textoNoticia, $fechaNoticia);
+                    if ($returnOk) {
+                        // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                        header('Location: noticias_administracion.php?msgConfirm=Datos Actualizados&tareaAdmin=verNoticiasAdmin');
+                        exit();
+                    } else {
+                        $valRegistro = 'Error al actualizar los datos.';
+                    }
+                } else {
+                    // La validación falló, muestra el mensaje de error.
+                    $valRegistro = $resultadoValidacion;
+                }
             }
         ?>
         <!-- formulario modificar noticias admin -->
@@ -48,7 +62,6 @@
                         // Obtengo la 'noticia' del registro seleccionado a traves del 'titulo' de la 'noticia'.
                         $resultado = [];
                         $resultado = SQL::obtenerNoticia($recogerTitulo);
-                        
                         if ($resultado > 0) {
                     ?>
                     <div class="containerInputs">

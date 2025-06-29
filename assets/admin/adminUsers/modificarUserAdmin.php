@@ -1,7 +1,7 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
-  $userAdmin = null;
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
+    $userAdmin = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -19,26 +19,33 @@
         <?php
             /* Obtengo el 'idUser encryptado con md5' pasado por 'url' desde verUsersAdmin.php. */
             if (isset($_GET['rUmCa'])) {
-                $userAdmin = $_GET['rUmCa'];
-                $_SESSION['numUser'] = '';
-                $idUser = '';
-                $array = array();
-                $users = [];
-                $users = SQL::obtenerIdUsersAdmin();
-                foreach($users as $value) {
-                    $array = array($value->idUser);
-                    $idUser = implode(",", $array);
-                    if (md5($idUser) === $userAdmin) {
-                        $_SESSION['numUser'] = $idUser;
+                $hashBuscado = $_GET['rUmCa'];
+                $idsUsuarios = SQL::obtenerIdUsersAdmin();
+                foreach ($idsUsuarios as $usuario) {
+                    $idUser = $usuario->idUser;
+                    if (md5($idUser) === $hashBuscado) {
+                        $userAdmin = $idUser;
+                        break; // Salimos al encontrar el usuario correcto
                     }
                 }
-                $userAdmin = $_SESSION['numUser'];
-                // declaro la variable de sesión 'identUser' para el 'usuario' a modificar y actualizar.
-                $_SESSION['identUserAdmin'] = $userAdmin;
+                $_SESSION['identUserAdmin'] = $userAdmin ?? null;
             }
             // validar datos del formulario.
             if (isset($_POST['submitModUserAdmin'])) {
-                $valRegistro = SQL::validarModUserAdmin();
+                $resultadoValidacion = SQL::validarModUserAdmin();
+                if (is_array($resultadoValidacion)) {
+                    // La validación fue exitosa, devuelve los datos y modifica el registro
+                    list($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $rol) = $resultadoValidacion;
+                    $returnOk = SQL::modificarUserAdmin($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $rol);
+                    if ($returnOk) {
+                        // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                        header('location:usuarios_administracion.php?msgConfirm=Registro Actualizado&tareaAdmin=verUsersAdmin');
+                        exit();
+                    }
+                } else {
+                    // La validación falló, muestra el mensaje de error.
+                    $valRegistro = $resultadoValidacion;
+                }
             }
         ?>
         <!-- formulario modoficar citas admin -->
@@ -62,7 +69,6 @@
                             // Obtengo el 'usuario' del registro seleccionado a traves de su 'email'.
                             $resultado = [];
                             $resultado = SQL::obtenerUsuarioAdmin($userAdmin);
-                            
                             if ($resultado > 0) {
                         ?>
                             <div class="containerInputs">

@@ -1,7 +1,7 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
-  $mostrarCitas = null;
+    include('../assets/archivosPHP/SQL.php');
+    $valRegistro = null;
+    $mostrarCitas = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,17 +16,26 @@
 </head>
 <body>
     <?php
-        // declaro la variable de sesión 'identUser' para la 'cita' a modificar y actualizar.
-        $_SESSION['identUser'] = $_SESSION['idUser'];
-
         // recogo 'fecha' para mostrar la 'cita' a modificar y actualizar.
         if (isset($_GET['recogerFechaCita'])) {
             $mostrarCitas = $_GET['recogerFechaCita'];
         }
-
         // validar fecha cita.
         if (isset($_POST['submitActualizarCita'])) {
-            $valRegistro = SQL::ValidarActualizarCita();
+            $resultadoValidacion = SQL::validarActualizarCita();
+            if (is_array($resultadoValidacion)) {
+                // La validación fue exitosa, devuelve los datos y modifica el registro
+                list($idCita, $nuevaFechaCita, $textActualizarCita) = $resultadoValidacion;
+                $returnOk = SQL::modificarCita($idCita, $nuevaFechaCita, $textActualizarCita);
+                if ($returnOk) {
+                    // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                    header('location:citaciones.php?msgConfirm=Cita Actualizada&tarea=tareasCitas');
+                    exit();
+                }
+            } else {
+                // La validación falló, muestra el mensaje de error.
+                $valRegistro = $resultadoValidacion;
+            }
         }
     ?>
     <main>

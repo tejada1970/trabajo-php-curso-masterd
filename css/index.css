@@ -1,5 +1,6 @@
-
+/**********************/
 /**** STYLES INDEX ****/
+/**********************/
 @media only screen and (min-width: 320px) {
     :root {
         --col111: #111;
@@ -23,22 +24,18 @@
         --bgLinear: linear-gradient(to bottom,#111, #f5f5f5, #111);
         --familyTrebuchet: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
-
     * {margin: 0; padding: 0; box-sizing: border-box;}
     html {
         /* scrollbar firefox */
         scrollbar-color: rgb(255, 255, 255, .9) rgb(0, 0, 0); scrollbar-width: thin; scroll-behavior: smooth;
     }
-
     body {
       position: relative; font-size: 16px; overflow-x: hidden; background: var(--Smoke);
       font-family: var(--familyTrebuchet);
     }
     body::-webkit-scrollbar {width: 0.4375rem;}
     body::-webkit-scrollbar-thumb {background: var(--col222); border-radius: 1.25rem;}
-
     .containAll {padding: 7.5rem 0 3.75rem 0;}
-
     .imgFondo {
       background: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
       url(../assets/images/images_fondos/fondo_4.jpg); background-repeat: no-repeat;
@@ -46,7 +43,6 @@
     }
     .icon {background: var(--Smoke); width: 1.5625rem; height: 1.5625rem; border-radius: 50%; padding: 0.3125rem;}
     img {width: 100%; object-fit: cover; object-position: center;}
-
     .flex {display: flex; justify-content: center; align-items: center; flex-wrap: wrap; flex-direction: column;}
     .flexRow {display: flex; justify-content: center; align-items: center; flex-wrap: wrap; flex-direction: row;}
     .nonWrap {flex-wrap: nowrap;}
@@ -54,36 +50,28 @@
     .gap10 {gap: 10px;}
     .gap15 {gap: 15px;}
     .gap20 {gap: 20px;}
-
     .w100 {width: 100%;}
-
     .mrgAuto {width: 90%; margin: 0 auto;}
-
     .pd5 {padding: 5px;}
     .pd10 {padding: 10px;}
     .pd15 {padding: 15px;}
     .pd20 {padding: 20px;}
     .pd30 {padding: 30px;}
-
     .txtCenter {text-align: center;}
     .txtJustify {text-align: justify;}
-
     .skewY {
         -webkit-transform: skewY(10deg) translateY(10px);
         -moz-transform: skewY(10deg) translateY(10px);
         -ms-transform: skewY(10deg) translateY(10px);
         transform: skewY(10deg) translateY(10px);
     }
-
     .divAvatar {position: absolute; top: 0.75rem; right: 0.75rem; gap: 0.3125rem;}
     .divAvatar .avatarUser {color: var(--GreenLight); font-size: 14px;}
     .avatarUser p {margin-top: -5px;}
-
     hr {
         position: relative; width: 100%; width: 15.625rem; margin: 0 auto; height: 0.3125rem;
         background: var(--Orange); transform: rotate(330deg); margin-top: 6.25rem;
     }
-
     /* burguer */
     .containBtnResp {
         position: fixed; top: 0; left: 0; width: 100%;
@@ -99,18 +87,17 @@
         position: relative; background: var(--Orange); border-radius: 0.1875rem;
         transform-origin: 0.25rem 0px; transition: all .2s linear;
     }
-    /* aspas boton */
+    /* aspas botón */
     .button_menu.close span {opacity: 1; transform: rotate(45deg) translate(0px, 0px); background: var(--Smoke);}
     .button_menu.close span:nth-child(2) {transform: rotate(-45deg) translate(-0.5rem, 0.3125rem);}
     .button_menu.close span:nth-child(3) {display: none;}
-
+    /* header-nav */
     .header {
         width: 100%; height: 100vh; display: flex; justify-content: space-between; align-items: center;
         padding: 0 1%; background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.3) 100%),
         url(../assets/images/images_index/banner.jpg); background-repeat: no-repeat; background-size: cover;
         background-position: center; background-attachment: fixed; padding-bottom: 1.25rem; flex-wrap: wrap;
     }
-
     .nav {
         position: fixed; top: 0; left: 0; height: 100vh; width: 80%; margin-left: -100%; flex-wrap: wrap;
         transition: all .2s linear; background-color: rgba(0, 0, 0, .9); z-index: 3000;
@@ -120,7 +107,6 @@
     .nav ul li a{text-decoration: none; color: var(--Smoke); font-weight: bold;}
     .nav ul li a.color {border-bottom: 0.125rem solid var(--Orange); color: var(--Aqua);}
     .nav ul li a:hover{text-decoration: none; color: var(--Orange)}
-
     .containLogo, .containLogo2 {
         flex-direction: row; gap: 0.625rem; position: absolute; top: 0.625rem; left: 0.625rem; z-index: 1000;
     }
@@ -132,7 +118,6 @@
     .spanColorLogo, .spanColorLogo2 {color: var(--GreenLight);}
     .containLogo h1::first-letter, .containLogo2 h1::first-letter {font-size: 25px;}
     .containLogo2 {display: none;}
-
     .hipervinculos {
         position: sticky; top: 0; left: 0; background: var(--Navy); padding: 0.625rem; width: 100%;
         z-index: 1600; /* por las cards */
@@ -142,7 +127,7 @@
     .flexHiper {flex-direction: row; justify-content: space-evenly;}
     .separadorHipervinculo {height: 6.25rem;}
     .subir {border-radius: 50%; display: none;}
-
+    /* articulos */
     .articulo {
         background: linear-gradient(to top,rgba(0,0,0,.90) 0,rgba(0,0,0,.80) 34%,rgba(0,0,0,0) 100%),
         url(../assets/images/images_fondos/fondo_1.jpg); background-repeat: no-repeat; background-size: cover;
@@ -160,7 +145,6 @@
         content: ""; display: block; width: 6.25rem; margin-top: 0.3125rem;
         height: 0.4375rem; background: var(--Orange);
     }
-
     .articuloPetArticles .textoTitle {font-size: 25px; color: var(--OrangeDark);}
     .articuloPetArticles .textoTitle::first-letter {
         font-size: 30px; font-weight: bold; color: var(--Orange); text-shadow: var(--shadowOrangeDark);
@@ -174,7 +158,7 @@
     }
     .articuloPetArticles .textoTitleArticles{font-size: 35px; color: var(--Aqua); text-shadow: var(--shadowBlack);}
     .articuloPetArticles .spanTextoTitleArticles {color: var(--OrangeDark);}
-
+    /* cards */
     .container_cards {width: 95%; margin: 3.125rem auto; flex-direction: row; z-index: -100; /* por los hipervinculos */}
     .row {width: 100%; flex-wrap: wrap; gap: 2.5rem;}
     .card {box-shadow: 0.625rem 0.625rem 1.25rem rgb(0, 0, 0, 0.5); margin-top: 2.5rem; position: relative;}
@@ -191,27 +175,19 @@
     }
     .btnAñadir:hover {color: var(--Aqua); transition: 0.7s;}
     .card .imgJson {width: 37.5rem; height: 60%; object-fit: cover; object-position: top;}
-
     .articulo .contenedor_thumbnail .veterinarios{width: 15.625rem; height: 15.625rem; padding: 0 1.25rem 1.25rem 1.25rem;}
     .sectionPersonal .articulo {border-right: none; margin-bottom: 9.375rem; margin-top: 3.125rem;}
-
     /* 'class colorSelect', para los hipervinculos seleccionados (esta relacionado con el 'scrool.js') */
     .colorSelect {border-bottom: 0.125rem solid var(--Orange); color: var(--Aqua);}
-
-    /* estilos div 'paspartu' para contener el iframe, y estilos iframe para incrustar el archivo footer.HTML */
-    .paspartu {position: relative; float: left; height: 100%; width: 100%; overflow: hidden;}
-    iframe {position: relative; float: left; height: 25rem; width: calc(100% + 20px); overflow-y: auto; border: none;}
 }
-
 @media only screen and (min-width: 768px) {
+    .subir {display: block;}
     hr {margin-top: 9.375rem; margin-bottom: 3.125rem;}
     .container_cards .row {flex-direction: row;}
     .sectionPersonal .contenedor_thumbnail {flex-direction: row;}
     .flexHiper {justify-content: center; gap: 1.875rem;}
 }
-
 @media only screen and (min-width: 1440px) {
-    .subir {display: block;}
     hr {margin-top: 12.5rem; margin-bottom: 6.25rem;}
     .articulo {max-width: 62rem;}
     .articulo .contenedor_texto p::first-letter {font-size: 40px;}

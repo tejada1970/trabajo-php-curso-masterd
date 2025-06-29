@@ -3,7 +3,7 @@
 
     include('SQL.php');
 
-    // Obtengo las citas para pasarselas al objeto 'Ajax'.
+    // Obtengo las citas para pasarselas al objeto 'Ajax' en (cargarCitas.js).
     $idUsuario = $_SESSION['idUser'];
     $ResultCitas =  [];
     $ResultCitas = SQL::obtenerCitas($idUsuario);

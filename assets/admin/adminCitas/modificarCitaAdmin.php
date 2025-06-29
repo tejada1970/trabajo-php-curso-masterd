@@ -1,8 +1,8 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
-  $mostrarCitas = null;
-  $userCita = null;
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
+    $mostrarCitas = null;
+    $userCita = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,40 +21,33 @@
         if (isset($_GET['fecha'])) {
             $mostrarCitas = $_GET['fecha'];
         }
-
-        /*
-            - Obtengo el 'idUser encryptado con md5' pasado por 'url' desde verUsersAdmin.php.
-            - Luego, obtengo todos los 'idUser' de la tabla 'citas', recorro el array y cada valor
-                lo convierto en string.
-            - A continuación, creo un 'if' para comparar cada valor del array con la encryptación.
-            - Por ultimo, el valor que coincide, me lo guarda en la variable de sesión $_SESSION['numUser'],
-                que a su vez guarda el valor en la variable '$userCita', donde la utilizaré más abajo para obtener
-                todos los datos de la 'cita' del usuario enviado por url.
-        */
         if (isset($_GET['rUmC'])) {
-            $userCita = $_GET['rUmC'];
-            $_SESSION['numUser'] = '';
-            $idUser = '';
-            $array = array();
-            $users = [];
-            $users = SQL::obteneridUsersCitas();
-            foreach($users as $value) {
-                $array = array($value->idUser);
-                $idUser = implode(",", $array);
-                if (md5($idUser) === $userCita) {
-                    $_SESSION['numUser'] = $idUser;
+            $hashBuscado = $_GET['rUmC'];
+            $idsUsuarios = SQL::obteneridUsersCitas();
+            $userCita = ''; // inicializa fuera del foreach
+            foreach ($idsUsuarios as $idUser) {
+                if (md5($idUser) === $hashBuscado) {
+                    $userCita = $idUser;
+                    break;
                 }
             }
-            $userCita = $_SESSION['numUser'];
-            // declaro la variable de sesión 'identUser' para la 'cita' a modificar y actualizar.
-            $_SESSION['identUser'] = $userCita;
-            // declaro la variable de sesión 'idUserGo' para volver del proceso de la 'cita' a modificar y actualizar.
-            $_SESSION['idUserGo'] = 1;
         }
-
         // validar fecha cita.
         if (isset($_POST['submitActualizarCitaAdmin'])) {
-            $valRegistro = SQL::ValidarActualizarCita();
+            $resultadoValidacion = SQL::validarActualizarCita();
+            if (is_array($resultadoValidacion)) {
+                // La validación fue exitosa, devuelve los datos y modifica el registro
+                list($idCita, $nuevaFechaCita, $textActualizarCita) = $resultadoValidacion;
+                $returnOk = SQL::modificarCita($idCita, $nuevaFechaCita, $textActualizarCita);
+                if ($returnOk) {
+                    // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                    header('location:citas_administracion.php?msgConfirm=Cita Actualizada&tareaAdmin=verCitasAdmin');
+                    exit();
+                }
+            } else {
+                // La validación falló, muestra el mensaje de error.
+                $valRegistro = $resultadoValidacion;
+            }
         }
     ?>
     <main>

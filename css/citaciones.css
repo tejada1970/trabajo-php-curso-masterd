@@ -1,59 +1,47 @@
-
 /***** STYLES CITACIONES *****/
 @media only screen and (min-width: 320px) {
     .containerTareas {width: 100%; max-width: 21.875rem; background: var(--col222);}
-
     .btnCerrar{
         background: var(--bgLinear); font-family: initial; position: absolute; top: 0.625rem;
         right: 0.3125rem; cursor: pointer; width: 2.1875rem; height: 2.1875rem;
         text-align: center; border-radius: 50%;
     }
     .btnCerrar a{font-size: 20px; text-decoration: none; font-weight: bold; margin-top: 0.3125rem;}
-
     .tareas {
         background: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
         url(../assets/images/images_fondos/casetaSmallPets.jpg); background-repeat: no-repeat;
         background-size: cover; background-position: center; border-radius: 1.25rem;
     }
-
     .tareas a {
         color: #222; font-size: 14px; font-weight: bold; width: 8.125rem; text-decoration: none;
         padding: 0.3125rem 0; background: var(--bgLinear); transform: scale(1.4); margin: 2.5rem 0;
         border: none; border-radius: 0.625rem; cursor: pointer; 
     }
-
     .iconTareas {width: 1.25rem; height: 1.25rem; vertical-align: middle; margin-right: 0.3125rem;}
-
     .container {max-height: 31.25rem; overflow-y: hidden;}
-
     .containerFraseH2 {
         margin-bottom: 0.9375rem; padding: 0.625rem 0 0.9375rem 0; position: relative;
         font-size: 16px; background: var(--bgLinear); flex-direction: column;
     }
     .containerFraseH2 h2 {color: var(--OrangeDark); text-align: center; text-shadow: var(--shadowSmoke);}
-
     .validarDatos {
         text-align: center; color: var(--Smoke); padding: 0.625rem 0;
         font-size: 18px; text-shadow: var(--shadowRed); z-index: 700;
     }
-
     .msgCitas {text-shadow: var(--shadowRed) !important; color: var(--GreenLight) !important; font-size: 20px;}
-
     .containerInputs {overflow-y: auto; max-height: 21.875rem; padding: 1.25rem; border-radius: 0%; flex-direction: column;}
     .containerInputs::-webkit-scrollbar {width: 0.4375rem;}
     .containerInputs::-webkit-scrollbar-thumb {background: var(--OrangeDark); border-radius: 1.25rem;} 
-
     .separadorCitas {
         position: relative; height: 1.875rem; border-bottom: 0.125rem solid var(--OrangeDark); margin-bottom: 1.875rem;
     }
     .separadorCitas2 {
         position: relative; height: 1.875rem; border-bottom: none; border-top: 0.125rem solid var(--OrangeDark);
     }
-
     form {background: var(--col222); height: 28.125rem; margin: 0.3125rem; padding: 0.625rem;}
     textarea {width: 100%; border: none; font-size: 15px; resize: none; padding: 0.3125rem; overflow-y: auto}
     form label {color: var(--Smoke);}
-    input[type="submit"] {
+    input[type="submit"], #abrirModal {
         background: var(--bgLinear); color: var(--col222); font-size: 17px; width: 100%; font-weight: bold;
         margin-top: 0.9375rem; padding: 0.625rem; border: none; border-radius: 0.625rem; cursor: pointer;
         letter-spacing: 0.0625rem;
@@ -61,13 +49,11 @@
     input[type="submit"]:active {transform: scale(0.9);}
     input[type="submit"]:hover {color: var(--OrangeDark); outline: 0.125rem solid var(--GreenLight);}
     .colorLabel {color:var(--Orange); font-size: 14px; font-weight: bold;}
-
     /* submits y tareas */
     .outlineColor {outline: 0.125rem solid var(--GreenLight);}
     .outlineColor:hover {color: var(--OrangeDark);}
     .danger {outline: 0.125rem solid var(--Red) !important;}
     .danger:hover {color: var(--Red) !important;}
-
     #tdCita {color: var(--Smoke); font-size: 18px; width: 100%;}
     .containerVerCitas {min-width: 20.625rem;}
 }

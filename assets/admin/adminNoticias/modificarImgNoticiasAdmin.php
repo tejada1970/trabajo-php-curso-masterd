@@ -1,7 +1,7 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
-  $recogerTitulo = null;
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
+    $recogerTitulo = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,10 +21,14 @@
             if (isset($_GET['recogerTitulo'])) {
                 $recogerTitulo = $_GET['recogerTitulo'];
             }
-            
             // validar datos del formulario.
             if (isset($_POST['submitModImgNoticiaAdmin'])) {
-                $valRegistro = SQL::validarModImgNoticiasAdmin();
+                $resultadoValidacion = SQL::validarModImgNoticiasAdmin();
+                if ($resultadoValidacion) {
+                    // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                    header('location:noticias_administracion.php?msgConfirm=Imagen Actualizada&tareaAdmin=verNoticiasAdmin');
+                    exit();
+                }
             }
         ?>
         <!-- formulario modificar 'img' (foto) noticias admin -->
@@ -48,13 +52,12 @@
                         // Obtengo la 'noticia' del registro seleccionado a traves del 'titulo' de la 'noticia'.
                         $resultado = [];
                         $resultado = SQL::obtenerNoticia($recogerTitulo);
-                        
                         if ($resultado > 0) {
                     ?>
                     <div class="containerInputs">
                         <input type="hidden" value="<?php echo $resultado[0]->titulo ?>" name="tituloModImgNoticiaAdmin">
                         <div>
-                            <img width="100" src="data:<?php echo $resultado[0]->tipo ?>;base64,<?php echo base64_encode($resultado[0]->imagen);?>" alt="imgNoticiasAdmin">
+                            <img id="previewImg" width="100" src="data:<?php echo $resultado[0]->tipo ?>;base64,<?php echo base64_encode($resultado[0]->imagen);?>" alt="imgNoticiasAdmin">
                         </div>
                         <label for="modImgNoticiaAdmin" class="colorLabel">* Imagen</label>
                         <input type="file" class="form-control-file inputFile" id="modImgNoticiaAdmin" name="foto">
@@ -69,5 +72,29 @@
             </div>
         </div>
     </main>
+    <!-- script -->
+    <script>
+        const inputFile = document.getElementById('modImgNoticiaAdmin');
+        const previewImg = document.getElementById('previewImg');
+
+        inputFile.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                // Validar tipo mime
+                if (!file.type.startsWith('image/')) {
+                    alert('Por favor, selecciona un archivo de imagen válido (jpg o png).');
+                    this.value = ''; // limpiar input para que no quede ese archivo inválido seleccionado
+                    // NO cambiar previewImg.src para mantener la imagen actual
+                    return;
+                }
+                // Si es válido, cargar preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>

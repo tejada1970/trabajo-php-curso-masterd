@@ -11,7 +11,7 @@
     <article class="articuloPetArticles w100">
         <div class="contenedor_texto">
             <p class="texto textoTitle txtCenter">
-                Disponemos, de todo tipo de articulos para tu <span class="spanPetsArticle">mascota</span><br>
+                Disponemos de todo tipo de artículos para tu <span class="spanPetsArticle">mascota</span>.<br>
                 Desde la más pequeña, hasta la más grande...
             </p>
         </div>

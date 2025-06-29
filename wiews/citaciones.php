@@ -1,21 +1,21 @@
 <?php
     session_start();
-
     if (!isset($_SESSION['usuario'])) {
         // redirecciono al usuario a la página login.php para VISITANTES.
         header('location: ./login.php');
     }
     else {
         if (isset($_SESSION['usuario'])) {
-        
             if(isset($_SESSION['rol'])){
-
                 if ($_SESSION['rol'] !== 'user') {
                     // redirecciono al usuario a la página login.php para VISITANTES.
                     header('location: ./login.php');
                 }
             }
         }
+    }
+    if (isset($_GET['msgConfirm'])) {
+        include('../assets/archivosPHP/messages.php');
     }
 ?>
 <!DOCTYPE html>
@@ -30,6 +30,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/citaciones.css">
+    <link rel="stylesheet" href="../assets/archivosHTML/footerHTML/footer.css">
 </head>
 <body class="imgFondo">
     <header>
@@ -78,7 +79,6 @@
                 <?php
                     $tarea = null;
                     if (isset($_GET['tarea'])) {
-
                         if ($_GET['tarea'] === 'insertar') {
                             $_SESSION['textCita'] = '';
                             include('../assets/archivosPHP/insertarCita.php');
@@ -88,7 +88,6 @@
                             // muestro todas las 'citas' del 'usuario de la sesión actual' a traves de 'ajax'.
                             include('../assets/archivosPHP/verCitas.php');
                             $tarea = null;
-                            
                         }
                         elseif ($_GET['tarea'] === 'modificar') {
                             include('../assets/archivosPHP/modificarCita.php');
@@ -111,25 +110,26 @@
                             $tarea = null;
                             
                         }else {
-                            // no hacer nada.
+                            include('../assets/archivosPHP/tareasCitas.php');
                             $tarea = null;
                         }
+                    }else {
+                        include('../assets/archivosPHP/tareasCitas.php');
+                        $tarea = null;
                     }
                 ?>
             </div>
         </div>
     </main>
-    <footer>
-        <div class="paspartu">
-            <iframe src="../assets/archivosHTML/footerHTML/footer.html"></iframe>
-        </div>
-    </footer>
-    
+    <!-- footer -->
+    <?php include '../assets/archivosHTML/footerHTML/footer.html'; ?>
     <!-- scripts -->
     <script src="../scripts/tareasCitas.js"></script>
     <script src="../scripts/resetear.js"></script>
     <script src="../scripts/cargarCitas.js"></script>
     <script src="../scripts/burguer.js"></script>
     <script src="../scripts/avatar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="../assets/archivosHTML/footerHTML/footer.js"></script>
 </body>
 </html>

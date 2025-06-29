@@ -1,6 +1,6 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,7 +21,15 @@
                 // guardar datos 'textNoticia' y 'titulo'.
                 $_SESSION['textNoticia'] = $_POST['textInsertNoticiaAdmin'];
                 $_SESSION['titulo'] = $_POST['tituloInsertNoticiaAdmin'];
-                $valRegistro = SQL::validarInsertNoticiasAdmin();            
+                $resultadoValidacion = SQL::validarInsertNoticiasAdmin();
+                if ($resultadoValidacion === true) {
+                    // Registro exitoso
+                    header('location:noticias_administracion.php?msgConfirm=Noticia Agregada&tareaAdmin=verNoticiasAdmin');
+                    exit();
+                } else {
+                    // La validación falló, muestra el mensaje de error.
+                    $valRegistro = $resultadoValidacion;
+                } 
             }
         ?>
         <!-- formulario insertar noticias admin -->

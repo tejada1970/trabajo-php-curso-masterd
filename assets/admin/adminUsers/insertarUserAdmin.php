@@ -1,6 +1,6 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
+    require_once __DIR__ . '/../../archivosPHP/SQL.php';
+    $valRegistro = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,9 +33,21 @@
                 $_SESSION['telefonoUser'] = $_POST['telefono'];
                 $_SESSION['birthdayUser'] = $_POST['birthday'];
                 $_SESSION['direccionUser'] = $_POST['direccion'];
-
                 // validar datos.
-                $valRegistro = SQL::validarRegistroAdmin();
+                $resultadoValidacion = SQL::validarRegistroAdmin();
+                if (is_array($resultadoValidacion)) {
+                    // La validación fue exitosa, devuelve los datos guarda el registro
+                    list($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $password, $rol) = $resultadoValidacion;
+                    $returnOk = SQL::insertarUserAdmin($nombre, $apellidos, $email, $telefono, $fecha_nacimiento, $direccion, $sexo, $usuario, $password, $rol);
+                    if ($returnOk) {
+                        // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                        header('location:usuarios_administracion.php?msgConfirm=Registro Realizado&tareaAdmin=verUsersAdmin');
+                        exit();
+                    }
+                } else {
+                    // La validación falló, muestra el mensaje de error.
+                    $valRegistro = $resultadoValidacion;
+                }
             }
         ?>
         <!-- formulario insertar citas admin -->

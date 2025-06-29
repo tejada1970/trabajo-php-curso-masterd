@@ -1,6 +1,6 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
+    include('SQL.php');
+    $valRegistro = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +20,20 @@
             if (isset($_POST['submitCita'])) {
                 // guardar dato 'textCita'.
                 $_SESSION['textCita'] = $_POST['textCita'];
-                $valRegistro = SQL::validarInsertCita();
+                $resultadoValidacion = SQL::validarInsertCita();
+                if (is_array($resultadoValidacion)) {
+                    // La validación fue exitosa, devuelve los datos y guarda el registro
+                    list($idUsuario, $fechaCita, $motivoCita) = $resultadoValidacion;
+                    $returnOk = SQL::insertarCita($idUsuario, $fechaCita, $motivoCita);
+                    if ($returnOk) {
+                        // Si el registro fue éxitoso redirecciona a la página de origen del crud con un mensaje de confirmación
+                        header('location:citaciones.php?msgConfirm=Nueva cita creada&tarea=tareas');
+                        exit();
+                    }
+                } else {
+                    // La validación falló, muestra el mensaje de error.
+                    $valRegistro = $resultadoValidacion;
+                }
             }
         ?>
         <!-- formulario insertar citas user -->

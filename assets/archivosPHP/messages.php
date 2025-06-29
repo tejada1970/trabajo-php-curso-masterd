@@ -1,3 +1,10 @@
+<?php
+    // Muestra un confirmación al 'usuario'.
+    $msgConfirm = null;
+    if (isset($_GET['msgConfirm'])) {
+        $msgConfirm = $_GET['msgConfirm'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,20 +18,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body onload="abrirModal();">
-    <?php
-        // Muestra un confirmación al 'usuario'.
-        $msgConfirm = null;
-        if (isset($_GET['msgConfirm'])) {
-            $msgConfirm = $_GET['msgConfirm'];
-        }
-    ?>
     <dialog class="animate__animated animate__backInDown" id="modal">
         <div class="divMsg">
             <p class="confirmDatos"><?php echo $msgConfirm; ?></p>
             <button id="btnAceptarMsg">Aceptar</button>
         </div>
     </dialog>
-
     <!-- scripts -->
     <script src="../scripts/messages.js"></script>
 </body>

@@ -1,24 +1,21 @@
-
+/****************************/
 /**** STYLES TABLE ADMIN ****/
+/****************************/
 @media only screen and (min-width: 320px) {
     .flexAdmin {display: flex; align-items: center; justify-content: center; gap: 0.625rem;}
-
     .containerAllTable {
         margin: 6.25rem auto; margin-left: 0.9375rem; margin-right: 0.9375rem; margin-top: 5rem;
         padding: 0.9375rem; background: var(--Smoke); border-radius: 0.9375rem;
         font-family: var(--familyTrebuchet);
     }
-
     .containerTitleH2 {background: var(--bgLinear); margin-bottom: 0.625rem;}
     .containerTitleH2 h2 {
         color: var(--OrangeDark); text-shadow: var(--shadowSmoke); font-weight: bold;
         font-size: 20px; margin-top: 0; padding: 1.25rem 0; padding-top: 0.9375rem; width: 100%;
     }
-
     .divTable {width: 100%; height: 37.5rem; overflow: auto; padding: 0.3125rem 0.625rem; background: var(--ccc);}
     .divTable::-webkit-scrollbar {width: 0.3125rem;}
     .divTable::-webkit-scrollbar-thumb {background: var(--OrangeDark); border-radius: 1.25rem;}
-
     .table {width: 100%; font-size: 16px; color: var(--col111); text-align: center;}
     #tableUsersAdmin thead, #tableCitasAdmin thead, #tableNoticiasAdmin thead {position: sticky; top: 0; height: 2.5rem;}
     #tableUsersAdmin th, #tableCitasAdmin th, #tableNoticiasAdmin th {
@@ -32,29 +29,21 @@
         transition: 1s; background: var(--col666); color: var(--Smoke);
     }
     #tableNoticiasAdmin tbody td:nth-child(4) {min-width: 17.5rem;}
-
     .btnTable {
         text-decoration: none; background: var(--bgLinear); color: var(--col111);
         font-size: 15px; letter-spacing: 0.0625rem; width: 100%; font-weight: bold;
         padding: 0.3125rem; border: none; border-radius: 0.625rem; cursor: pointer; 
     }
-
     .btnAgregar {margin-bottom: 0.625rem;}
-
     .btnInsert {outline: 0.125rem solid var(--OrangeDark); font-size: 20px; padding: 0.3125rem; padding-bottom: 0.625rem;}
     .btnInsert:hover {color: var(--OrangeDark);}
-
     .btnImg {outline: 0.125rem solid var(--GreenLight);}
     .btnImg:hover {color: var(--GreenDark);}
-
     .btnEdit {outline: 0.125rem solid var(--GreenLight);}
     .btnEdit:hover {color: var(--GreenDark);}
-
     .btnDelete {outline: 0.125rem solid var(--Red);}
     .btnDelete:hover {color: var(--Red);}
-
     .btnInsert, .btnLogin, .btnImg, .btnEdit, .btnDelete {text-shadow: var(--shadowSmoke);}
-
     /* clases para el select, search y paginación */
     #tableUsersAdmin .form-control, #tableCitasAdmin .form-control, #tableNoticiasAdmin .form-control {
         font-size: 13px !important; padding: 0 1.875rem !important;
@@ -64,21 +53,16 @@
     }
     .pagination-link {font-size: 13px !important;}
     .pagination-link.previous, .pagination-link.next {font-size: 16px !important;}
-
     textarea {
         resize: none; min-height: 9.375rem; max-height: 9.375rem; padding: 0.3125rem;
         min-width: 17.5rem; max-width: 17.5rem; overflow-y: auto; overflow-x: hidden;
     }
     .textarea::-webkit-scrollbar {width: 0.3125rem;}
     .textarea::-webkit-scrollbar-thumb {background: var(--col222); border-radius: 1.25rem;}
-
     .containerTitle .title h2 {font-size: 24px;}
-
     form {background: linear-gradient(to top,#111, #555, #111);}
     .colorLabel {color:var(--Orange); font-size: 14px; font-weight: bold;}
-
     .avatarUser p {margin-top: -10px;}
-
     .containLogo h1, .containLogo2 h1 {
         color: var(--Orange); font-weight: bold; font-size: 20px;
         font-family: var(--familyTrebuchet);
@@ -87,16 +71,13 @@
     .containLogo h1::first-letter, .containLogo2 h1::first-letter {font-size: 25px;}
     .containLogo h1, .containLogo2 h1 {padding-top: 2px;}
 }
-
 /* forms: registro(visit), perfil(user y admin), insertarUserAdmin, modificarUserAdmin */
 @media only screen and (min-width: 768px) {
     .formWidth {max-width: 31.25rem; min-width: 31.25rem;}
 }
-
 @media only screen and (min-width: 1440px) {
     #tableNoticiasAdmin tbody td:nth-child(4) {min-width: 25rem;}
 }
-
 @media only screen and (min-width: 1600px) {
     .containerAllTable {width: 106.25rem; margin: 0 auto; margin-top: 10rem; margin-bottom: 6.25rem;}
 }

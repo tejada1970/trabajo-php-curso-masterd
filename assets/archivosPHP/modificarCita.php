@@ -1,6 +1,6 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
+    include('../assets/archivosPHP/SQL.php');
+    $valRegistro = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,13 +17,12 @@
     <?php
         // validar datos del formulario.
         if (isset($_POST['submitBuscarCita'])) {
-
             if ($_POST['selectModCita'] === '0') {
                 $valRegistro = 'no se ha seleccionado ninguna fecha';
 
             }else {
                 $fechaCita = $_POST['selectModCita'];
-                /**  Redireccionar al 'usuario' a la página 'citaciones.php'. para la actualización **/
+                // Redireccionar al 'usuario' a la página 'citaciones.php'. para la actualización.
                 header('location:citaciones.php?recogerFechaCita='.$fechaCita.'&tarea=actualizar');
             }
         }

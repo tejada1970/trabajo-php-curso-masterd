@@ -1,6 +1,6 @@
 <?php
-  include('../assets/archivosPHP/SQL.php');
-  $valRegistro = null;
+    require_once __DIR__ . '/../assets/archivosPHP/SQL.php';
+    $valRegistro = null;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/registro.css">
-    
+    <link rel="stylesheet" href="../assets/archivosHTML/footerHTML/footer.css">
 </head>
 <body class="imgFondo">
     <?php
@@ -90,14 +90,12 @@
             </div>
         </div>
     </main>
-    <footer>
-        <div class="paspartu">
-            <iframe src="../assets/archivosHTML/footerHTML/footer.html"></iframe>
-        </div>
-    </footer>
-
+    <!-- footer -->
+    <?php include '../assets/archivosHTML/footerHTML/footer.html'; ?>
     <!-- scripts -->
     <script src="../scripts/resetear.js"></script>
     <script src="../scripts/burguer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+    <script src="../assets/archivosHTML/footerHTML/footer.js"></script>
 </body>
 </html>
