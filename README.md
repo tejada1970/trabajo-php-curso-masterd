@@ -64,17 +64,18 @@ En la página **`Login/Inicio sesión`** se proporcionan dos credenciales predet
 
 ## ✨ Características
 
-🌐 Para su correcto funcionamiento, el proyecto debe ejecutarse desde un servidor. Se recomienda utilizar **XAMPP**.
-
-📂 Este proyecto incluye una **base de datos** en formato SQL (`small_pets.sql`) con los datos necesarios para garantizar su correcto funcionamiento.
-
-### 📝 Observaciones
+- 🌐 Para su correcto funcionamiento el proyecto debe ejecutarse desde un servidor local. Se recomienda el uso de **XAMPP**.
+- 📂 Este proyecto incluye una **base de datos** en formato SQL (`small_pets.sql`) con los datos necesarios para garantizar su correcto funcionamiento.
 
 > ⚠️ **Aviso importante:** La base de datos **`small_pets.sql`** está diseñada exclusivamente para el proyecto **`trabajo-php-curso-masterd`** y no debe utilizarse para ningún otro propósito.
 
-Sobre cumplir con el objetivo que se pedía en este trabajo y funcionar todo correctamente, la arquitectura general del proyecto, incluida su base de datos, **no está optimizada ni diseñada para usarse como base en entornos reales. No se recomienda utilizarla tal cual.**
+---
 
-No obstante, parte del código fuente puede resultar **útil e interesante** como referencia. Se pueden reutilizar fragmentos y adaptarlos a desarrollos personales o profesionales, según las necesidades de cada caso.
+## 📝 Observaciones
+
+Sobre cumplir con el objetivo que se pedía en este trabajo y funcionar todo correctamente, la arquitectura general del proyecto, **no está optimizada ni diseñada para usarse como base en entornos de producción. No se recomienda utilizarla tal cual.**
+
+No obstante, parte del código fuente puede resultar **útil como referencia**. Es posible reutilizar fragmentos y adaptarlos a desarrollos personales o profesionales, según las necesidades.
 
 ---
 
@@ -88,6 +89,6 @@ En esta guía, encontrarás toda la información necesaria sobre cómo clonar y 
 
 ---
 
-## 📄 License
+## 📄 Licencia
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
