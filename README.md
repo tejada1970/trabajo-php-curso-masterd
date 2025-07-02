@@ -85,7 +85,7 @@ En esta guía, encontrarás toda la información necesaria sobre cómo clonar y 
 
 - 📄 [Clonar proyecto estático en XAMPP](https://github.com/tejada1970/guias-desarrollo/blob/master/clonar/clonar-proyecto-estatico-en-xampp.md)
 
-> 💡 Recuerda copiar la URL de este repositorio desde `<> Code / HTTPS` para reemplazar la URL de ejemplo que se proporciona en la guía para clonar el proyecto.
+> 💡 **Recuerda copiar la URL de este repositorio desde `<> Code / HTTPS` para reemplazar la URL de ejemplo que se proporciona en la guía para clonar el proyecto.**
 
 ---
 
