@@ -6,7 +6,7 @@ Trabajo obligatorio del Curso Superior en Programación de Páginas Web — Inst
 
 > 📚 Incluye guías paso a paso.
 
-> 🗓 Última actualización: 06-07-2025.
+> 🗓 Última actualización: 08-07-2025.
 
 ---
 
