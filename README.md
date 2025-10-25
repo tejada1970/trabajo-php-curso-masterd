@@ -6,7 +6,7 @@ Trabajo obligatorio del Curso Superior en Programación de Páginas Web — Inst
 
 > 📚 Incluye guías paso a paso.
 
-> 🗓 Última actualización: 08-07-2025.
+> 🗓 Última actualización: 25-10-2025.
 
 ---
 
@@ -87,7 +87,7 @@ No obstante, parte del código fuente puede resultar **útil como referencia**. 
 
 En esta guía, encontrarás toda la información necesaria sobre cómo crear un nuevo proyecto estático:
 
-- 📄 [Crear proyecto estático](https://github.com/tejada1970/guias-desarrollo/blob/master/crear/crear-proyecto-estatico.md)
+- 📄 [Crear proyecto estático](https://github.com/tejada1970/guias-desarrollo/blob/master/entorno-windows/crear/crear-proyecto-estatico.md)
 
 ---
 
@@ -97,7 +97,7 @@ Crear un repositorio en **GitHub** y subir tu proyecto local permite mantener tu
 
 En esta guía, encontrarás toda la información necesaria sobre cómo crear un repositorio en **GitHub** y subir tu proyecto local:
 
-- 📄 [Crear repositorio en GitHub y subir proyecto local](https://github.com/tejada1970/guias-desarrollo/blob/master/crear/crear-repositorio-github-subir-proyecto.md)
+- 📄 [Crear repositorio en GitHub y subir proyecto local](https://github.com/tejada1970/guias-desarrollo/blob/master/entorno-windows/crear/crear-repositorio-github-subir-proyecto.md)
 
 ---
 
@@ -105,7 +105,7 @@ En esta guía, encontrarás toda la información necesaria sobre cómo crear un 
 
 En esta guía, encontrarás toda la información necesaria sobre cómo clonar y ejecutar este proyecto en un entorno local con **XAMPP**:
 
-- 📄 [Clonar proyecto estático en XAMPP](https://github.com/tejada1970/guias-desarrollo/blob/master/clonar/clonar-proyecto-estatico-en-xampp.md)
+- 📄 [Clonar proyecto estático en XAMPP](https://github.com/tejada1970/guias-desarrollo/blob/master/entorno-windows/clonar/clonar-proyecto-estatico-en-xampp.md)
 
 > 💡 **Recuerda copiar la URL de este repositorio desde `<> Code / HTTPS` para reemplazar la URL de ejemplo que se proporciona en la guía para clonar el proyecto.**
 
